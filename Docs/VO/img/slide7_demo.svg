@@ -1,0 +1,26 @@
+<svg viewBox="0 0 820 180" width="820" height="180" xmlns="http://www.w3.org/2000/svg">
+	<rect x="10" y="10" width="800" height="160" rx="22" fill="#f8f6ef" stroke="#d7d1c2"/>
+	<text x="410" y="36" text-anchor="middle" font-size="18" fill="#173b36" font-family="Segoe UI">Etapes de la demo</text>
+	<path d="M60 100 H760" stroke="#8a9e98" stroke-width="3" stroke-linecap="round" marker-end="url(#arrow)"/>
+	<defs><marker id="arrow" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#8a9e98"/></marker></defs>
+	<circle cx="140" cy="100" r="18" fill="#4e8c82"/>
+	<text x="140" y="105" text-anchor="middle" font-size="13" fill="#fff" font-family="Segoe UI" font-weight="bold">1</text>
+	<text x="140" y="75" text-anchor="middle" font-size="12" fill="#4e8c82" font-family="Segoe UI">Bouton Scan</text>
+	<text x="140" y="138" text-anchor="middle" font-size="10" fill="#5a6d68" font-family="Segoe UI">Appui tactile →</text>
+	<text x="140" y="152" text-anchor="middle" font-size="10" fill="#5a6d68" font-family="Segoe UI">camera se lance</text>
+	<circle cx="290" cy="100" r="18" fill="#4e8c82"/>
+	<text x="290" y="105" text-anchor="middle" font-size="13" fill="#fff" font-family="Segoe UI" font-weight="bold">2</text>
+	<text x="290" y="75" text-anchor="middle" font-size="12" fill="#4e8c82" font-family="Segoe UI">Commande vocale</text>
+	<text x="290" y="138" text-anchor="middle" font-size="10" fill="#5a6d68" font-family="Segoe UI">Dire "scan" →</text>
+	<text x="290" y="152" text-anchor="middle" font-size="10" fill="#5a6d68" font-family="Segoe UI">sans toucher l'ecran</text>
+	<circle cx="480" cy="100" r="18" fill="#4e8c82"/>
+	<text x="480" y="105" text-anchor="middle" font-size="13" fill="#fff" font-family="Segoe UI" font-weight="bold">3</text>
+	<text x="480" y="75" text-anchor="middle" font-size="12" fill="#4e8c82" font-family="Segoe UI">Settings</text>
+	<text x="480" y="138" text-anchor="middle" font-size="10" fill="#5a6d68" font-family="Segoe UI">Changement d'ecran</text>
+	<text x="480" y="152" text-anchor="middle" font-size="10" fill="#5a6d68" font-family="Segoe UI">volume, vitesse vocale</text>
+	<circle cx="670" cy="100" r="18" fill="#a88723" stroke="#a88723" stroke-dasharray="4,3"/>
+	<text x="670" y="105" text-anchor="middle" font-size="13" fill="#fff" font-family="Segoe UI" font-weight="bold">4</text>
+	<text x="670" y="75" text-anchor="middle" font-size="12" fill="#a88723" font-family="Segoe UI">Describe (V1)</text>
+	<text x="670" y="138" text-anchor="middle" font-size="10" fill="#5a6d68" font-family="Segoe UI">IA decrit la scene</text>
+	<text x="670" y="152" text-anchor="middle" font-size="10" fill="#5a6d68" font-family="Segoe UI">→ prochaine etape</text>
+</svg>

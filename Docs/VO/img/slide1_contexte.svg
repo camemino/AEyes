@@ -1,0 +1,19 @@
+<svg viewBox="0 0 820 280" width="820" height="280" xmlns="http://www.w3.org/2000/svg">
+	<rect x="10" y="10" width="800" height="260" rx="22" fill="#f8f6ef" stroke="#d7d1c2"/>
+	<text x="410" y="42" text-anchor="middle" font-size="28" fill="#173b36" font-family="Segoe UI">A-Eyes</text>
+	<text x="410" y="64" text-anchor="middle" font-size="14" fill="#5a6d68" font-family="Segoe UI">Avancement du prototype V0 — Avril 2026 — 5 eleves</text>
+	<ellipse cx="410" cy="100" rx="58" ry="28" fill="#fff7d1" stroke="#173b36" stroke-width="2"/>
+	<circle cx="410" cy="100" r="10" fill="#173b36"/>
+	<rect x="56" y="146" width="320" height="100" rx="18" fill="#eef6f5" stroke="#4e8c82" stroke-width="2"/>
+	<rect x="444" y="146" width="320" height="100" rx="18" fill="#fff7d1" stroke="#a88723" stroke-width="2"/>
+	<text x="216" y="174" text-anchor="middle" font-size="18" fill="#173b36" font-family="Segoe UI">Probleme vise</text>
+	<text x="604" y="174" text-anchor="middle" font-size="18" fill="#5a480e" font-family="Segoe UI">Perimetre V0</text>
+	<g font-size="13" font-family="Segoe UI">
+		<text x="82" y="200" fill="#173b36">Accessibilite pour malvoyants</text>
+		<text x="82" y="220" fill="#173b36">Interface simple + guidage vocal</text>
+		<text x="82" y="240" fill="#173b36">Produit final avec IA en juin</text>
+		<text x="470" y="200" fill="#5a480e">Interface accessible</text>
+		<text x="470" y="220" fill="#5a480e">Camera + TTS + commandes vocales</text>
+		<text x="470" y="240" fill="#5a480e">Pas d'IA a ce stade</text>
+	</g>
+</svg>

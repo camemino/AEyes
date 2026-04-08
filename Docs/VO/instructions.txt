@@ -1,0 +1,12 @@
+Vous trouvez ci-dessous (et sur DVL) l'organisation de notre prochaine réunion de suivi du projet P2IP. 
+
+Pour rappel, voici les Consignes pour cette réunion :
+
+Thème à traiter pour cette réunion : Vérification d’avancement du projet vis-à-vis du planning.
+    •    Préparer une présentation (10 min) dans laquelle vous devez préciser :
+    •    Une brève présentation (1 min) afin de rappeler le contexte (problème visé, description de produit attendu en juin).
+    •    Expliquer vos avancements (7 min). Reprendre votre planning et lister point par point concrètement vos avancements sur chaque fonctionnalité prévue dans le planning. Justifier que vos réalisations correspondent à l’effort prévu (à savoir 7h/élève/semaine pour P2IP).
+    •    Rectifier le planning (2min) pour la suite de votre projet. En fonction de vos réalisations en mars et des fonctionnalités à réaliser, adapter votre planning. Attention, il faut montrer votre planning très détaillé et vérifiable pour les semaines à venir.
+Tous les membres doivent être présents au rendez-vous. L’absence sera pénalisée.
+
+Il faut rédiger un compte-rendu après chaque réunion (réunions de suivi collectives, ou des réunions de travail dans votre équipe). Tous les comptes-rendus feront une partie annexe de votre rapport final du projet

@@ -1,0 +1,19 @@
+<svg viewBox="0 0 820 260" width="820" height="260" xmlns="http://www.w3.org/2000/svg">
+	<rect x="10" y="10" width="800" height="240" rx="22" fill="#f8f6ef" stroke="#d7d1c2"/>
+	<text x="410" y="38" text-anchor="middle" font-size="16" fill="#5a6d68" font-family="Segoe UI">Prototype V0 — Etat d'avancement</text>
+	<rect x="56" y="56" width="360" height="156" rx="18" fill="#eef6f5" stroke="#4e8c82" stroke-width="2"/>
+	<rect x="444" y="56" width="320" height="100" rx="18" fill="#fbefef" stroke="#b56b6b" stroke-width="2"/>
+	<text x="236" y="84" text-anchor="middle" font-size="20" fill="#173b36" font-family="Segoe UI">Deja operationnel</text>
+	<text x="604" y="84" text-anchor="middle" font-size="20" fill="#7a3030" font-family="Segoe UI">Encore simule</text>
+	<g font-size="14" font-family="Segoe UI">
+		<text x="82" y="112" fill="#173b36">✓ Camera en temps reel</text>
+		<text x="82" y="134" fill="#173b36">✓ Interface accessible (4 boutons)</text>
+		<text x="82" y="156" fill="#173b36">✓ Navigation entre ecrans</text>
+		<text x="82" y="178" fill="#173b36">✓ Guidage vocal</text>
+		<text x="82" y="200" fill="#173b36">✓ Commandes vocales (6 commandes)</text>
+		<text x="470" y="122" fill="#7a3030">○ Describe (placeholder)</text>
+		<text x="470" y="146" fill="#7a3030">○ Analyse IA → V1</text>
+	</g>
+	<rect x="444" y="176" width="320" height="36" rx="14" fill="#fff7d1" stroke="#a88723"/>
+	<text x="604" y="200" text-anchor="middle" font-size="14" fill="#5a480e" font-family="Segoe UI">Effort V0 : 3 semaines de 7h / eleve</text>
+</svg>

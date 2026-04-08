@@ -1,0 +1,25 @@
+<svg viewBox="0 0 820 280" width="820" height="280" xmlns="http://www.w3.org/2000/svg">
+	<rect x="10" y="10" width="800" height="260" rx="22" fill="#f8f6ef" stroke="#d7d1c2"/>
+	<text x="410" y="38" text-anchor="middle" font-size="18" fill="#173b36" font-family="Segoe UI">Limites identifiees et contournements</text>
+	<rect x="40" y="56" width="220" height="90" rx="18" fill="#eef6f5" stroke="#4e8c82" stroke-width="2"/>
+	<text x="150" y="82" text-anchor="middle" font-size="16" fill="#173b36" font-family="Segoe UI">IA non integree</text>
+	<text x="150" y="106" text-anchor="middle" font-size="12" fill="#5a6d68" font-family="Segoe UI">Placeholder en V0</text>
+	<text x="150" y="126" text-anchor="middle" font-size="12" fill="#4e8c82" font-family="Segoe UI">→ Prevue en V1</text>
+	<rect x="300" y="56" width="220" height="90" rx="18" fill="#fff7d1" stroke="#a88723" stroke-width="2"/>
+	<text x="410" y="82" text-anchor="middle" font-size="16" fill="#5a480e" font-family="Segoe UI">Dependance reseau</text>
+	<text x="410" y="106" text-anchor="middle" font-size="12" fill="#5a480e" font-family="Segoe UI">Google STT requiert internet</text>
+	<text x="410" y="126" text-anchor="middle" font-size="12" fill="#a88723" font-family="Segoe UI">→ Boutons tactiles en secours</text>
+	<rect x="560" y="46" width="220" height="110" rx="18" fill="#fce8e8" stroke="#b56b6b" stroke-width="2.5"/>
+	<text x="670" y="72" text-anchor="middle" font-size="16" fill="#7a3030" font-family="Segoe UI">Kivy : limite sur mobile</text>
+	<text x="670" y="96" text-anchor="middle" font-size="12" fill="#7a3030" font-family="Segoe UI">Tres bien pour un prototype</text>
+	<text x="670" y="112" text-anchor="middle" font-size="12" fill="#7a3030" font-family="Segoe UI">mais limite en natif telephone</text>
+	<text x="670" y="136" text-anchor="middle" font-size="12" fill="#b56b6b" font-family="Segoe UI">→ TTS interne + plan V1</text>
+	<rect x="40" y="180" width="740" height="70" rx="18" fill="#eef6f5" stroke="#4e8c82" stroke-width="2"/>
+	<text x="410" y="206" text-anchor="middle" font-size="16" fill="#173b36" font-family="Segoe UI">Contraintes deja respectees</text>
+	<g font-size="13" font-family="Segoe UI" text-anchor="middle">
+		<text x="150" y="234" fill="#173b36">Fort contraste</text>
+		<text x="320" y="234" fill="#173b36">Gros boutons</text>
+		<text x="490" y="234" fill="#173b36">Retour vocal</text>
+		<text x="670" y="234" fill="#173b36">Pas de stockage (RGPD)</text>
+	</g>
+</svg>

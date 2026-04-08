@@ -1,0 +1,134 @@
+#:kivy 2.3
+
+# ─────────────────────────────────────────────────────────────────────────────
+#  Styles communs
+# ─────────────────────────────────────────────────────────────────────────────
+<Button>:
+    font_size: "30sp"
+    bold: True
+
+# ─────────────────────────────────────────────────────────────────────────────
+#  Écran principal
+# ─────────────────────────────────────────────────────────────────────────────
+<MainScreen>:
+    name: "main"
+
+    canvas.before:
+        Color:
+            rgba: 0, 0, 0, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+    BoxLayout:
+        orientation: "vertical"
+        padding: "18dp"
+        spacing: "12dp"
+
+        # ── Zone caméra ──────────────────────────────────────────────────────
+        Image:
+            id: camera_view
+            size_hint: (1, 0.50)
+            fit_mode: "contain"
+
+        # ── Bouton SCAN ──────────────────────────────────────────────────────
+        Button:
+            text: "SCAN"
+            font_size: "36sp"
+            size_hint: (1, None)
+            height: "110dp"
+            background_color: 1, 0.8, 0, 1
+            color: 0, 0, 0, 1
+            on_press: root.toggle_scan()
+
+        # ── DESCRIBE button ───────────────────────────────────────────────────
+        Button:
+            text: "DESCRIBE"
+            font_size: "32sp"
+            size_hint: (1, None)
+            height: "95dp"
+            background_color: 0.1, 0.7, 0.3, 1
+            color: 1, 1, 1, 1
+            on_press: root.on_describe()
+
+        # ── REPEAT button ─────────────────────────────────────────────────────
+        Button:
+            text: "REPEAT"
+            font_size: "26sp"
+            size_hint: (1, None)
+            height: "80dp"
+            background_color: 0.2, 0.6, 1, 1
+            color: 1, 1, 1, 1
+            on_press: root.on_repeat()
+
+        # ── SETTINGS button ───────────────────────────────────────────────────
+        Button:
+            text: "SETTINGS"
+            font_size: "22sp"
+            size_hint: (1, None)
+            height: "65dp"
+            background_color: 0.3, 0.3, 0.3, 1
+            color: 1, 1, 1, 1
+            on_press: root.go_to_settings()
+
+# ─────────────────────────────────────────────────────────────────────────────
+#  Écran réglages
+# ─────────────────────────────────────────────────────────────────────────────
+<SettingsScreen>:
+    name: "settings"
+
+    canvas.before:
+        Color:
+            rgba: 0.05, 0.05, 0.05, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+    BoxLayout:
+        orientation: "vertical"
+        padding: "24dp"
+        spacing: "20dp"
+
+        Label:
+            text: "SETTINGS"
+            font_size: "34sp"
+            bold: True
+            color: 1, 1, 1, 1
+            size_hint: (1, None)
+            height: "60dp"
+
+        Label:
+            text: "Speech rate"
+            font_size: "26sp"
+            color: 0.8, 0.8, 0.8, 1
+            size_hint: (1, None)
+            height: "40dp"
+
+        Slider:
+            id: rate_slider
+            min: 80
+            max: 250
+            value: 160
+            step: 10
+            size_hint: (1, None)
+            height: "60dp"
+            on_value: root.on_rate_change(self.value)
+
+        Label:
+            text: str(int(rate_slider.value)) + " words/min"
+            font_size: "22sp"
+            color: 1, 0.8, 0, 1
+            size_hint: (1, None)
+            height: "35dp"
+
+        Widget:
+            size_hint: (1, 1)
+
+        Button:
+            text: "← BACK"
+            font_size: "28sp"
+            size_hint: (1, None)
+            height: "90dp"
+            background_color: 0.2, 0.6, 1, 1
+            color: 1, 1, 1, 1
+            on_press: root.go_back()

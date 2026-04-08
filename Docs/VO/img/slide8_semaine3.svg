@@ -1,0 +1,40 @@
+<svg viewBox="0 0 470 250" width="470" height="250" xmlns="http://www.w3.org/2000/svg">
+	<rect x="0" y="0" width="470" height="250" rx="12" fill="#2d2d2d"/>
+	<!-- Header -->
+	<rect x="10" y="10" width="450" height="32" rx="6" fill="#b56b6b"/>
+	<text x="24" y="32" font-size="16" fill="#fff" font-family="Segoe UI" font-weight="bold">Semaine 3 — Integration</text>
+	<!-- Column headers -->
+	<text x="24" y="66" font-size="13" fill="#aaa" font-family="Segoe UI">Tache</text>
+	<text x="240" y="66" font-size="13" fill="#aaa" font-family="Segoe UI">Heures</text>
+	<text x="310" y="66" font-size="13" fill="#aaa" font-family="Segoe UI">Personnes</text>
+	<text x="410" y="66" font-size="13" fill="#aaa" font-family="Segoe UI">Homme-h</text>
+	<line x1="10" y1="74" x2="460" y2="74" stroke="#444" stroke-width="1"/>
+	<!-- Row 1 -->
+	<text x="24" y="96" font-size="13" fill="#ddd" font-family="Segoe UI">Integration des modules</text>
+	<text x="240" y="96" font-size="13" fill="#ddd" font-family="Segoe UI">7h</text>
+	<text x="340" y="96" font-size="13" fill="#ddd" font-family="Segoe UI">2</text>
+	<text x="430" y="96" font-size="13" fill="#ddd" font-family="Segoe UI">14h</text>
+	<line x1="10" y1="106" x2="460" y2="106" stroke="#3a3a3a" stroke-width="1"/>
+	<!-- Row 2 -->
+	<text x="24" y="128" font-size="13" fill="#ddd" font-family="Segoe UI">Ecran reglages</text>
+	<text x="240" y="128" font-size="13" fill="#ddd" font-family="Segoe UI">2h</text>
+	<text x="340" y="128" font-size="13" fill="#ddd" font-family="Segoe UI">1</text>
+	<text x="430" y="128" font-size="13" fill="#ddd" font-family="Segoe UI">2h</text>
+	<line x1="10" y1="138" x2="460" y2="138" stroke="#3a3a3a" stroke-width="1"/>
+	<!-- Row 3 -->
+	<text x="24" y="160" font-size="13" fill="#ddd" font-family="Segoe UI">Tests et debug</text>
+	<text x="240" y="160" font-size="13" fill="#ddd" font-family="Segoe UI">2h</text>
+	<text x="340" y="160" font-size="13" fill="#ddd" font-family="Segoe UI">3</text>
+	<text x="430" y="160" font-size="13" fill="#ddd" font-family="Segoe UI">6h</text>
+	<line x1="10" y1="170" x2="460" y2="170" stroke="#3a3a3a" stroke-width="1"/>
+	<!-- Row 4 -->
+	<text x="24" y="192" font-size="13" fill="#ddd" font-family="Segoe UI">Documentation</text>
+	<text x="240" y="192" font-size="13" fill="#ddd" font-family="Segoe UI">7h</text>
+	<text x="340" y="192" font-size="13" fill="#ddd" font-family="Segoe UI">3</text>
+	<text x="430" y="192" font-size="13" fill="#ddd" font-family="Segoe UI">21h</text>
+	<line x1="10" y1="202" x2="460" y2="202" stroke="#3a3a3a" stroke-width="1"/>
+	<!-- Sous-total -->
+	<text x="140" y="230" font-size="14" fill="#fff" font-family="Segoe UI" font-weight="bold">Sous-total</text>
+	<text x="240" y="230" font-size="14" fill="#fff" font-family="Segoe UI" font-weight="bold">18h</text>
+	<text x="430" y="230" font-size="14" fill="#fff" font-family="Segoe UI" font-weight="bold">43h</text>
+</svg>

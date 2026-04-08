@@ -1,0 +1,20 @@
+<svg viewBox="0 0 820 230" width="820" height="230" xmlns="http://www.w3.org/2000/svg">
+	<rect x="10" y="10" width="800" height="210" rx="22" fill="#f8f6ef" stroke="#d7d1c2"/>
+	<path d="M90 120 H730" stroke="#8a9e98" stroke-width="4" stroke-linecap="round"/>
+	<circle cx="170" cy="120" r="22" fill="#4e8c82"/>
+	<circle cx="410" cy="120" r="22" fill="#a88723"/>
+	<circle cx="650" cy="120" r="22" fill="#173b36"/>
+	<text x="170" y="126" text-anchor="middle" font-size="14" fill="#fff" font-family="Segoe UI">V0</text>
+	<text x="410" y="126" text-anchor="middle" font-size="14" fill="#fff" font-family="Segoe UI">V1</text>
+	<text x="650" y="126" text-anchor="middle" font-size="11" fill="#fff" font-family="Segoe UI">Soutenance</text>
+	<text x="170" y="84" text-anchor="middle" font-size="16" fill="#4e8c82" font-family="Segoe UI" font-weight="bold">✓ Valide</text>
+	<text x="410" y="84" text-anchor="middle" font-size="16" fill="#a88723" font-family="Segoe UI" font-weight="bold">A venir</text>
+	<text x="650" y="84" text-anchor="middle" font-size="16" fill="#173b36" font-family="Segoe UI" font-weight="bold">Juin 2026</text>
+	<text x="170" y="156" text-anchor="middle" font-size="11" fill="#5a6d68" font-family="Segoe UI">Interface + Camera + Voix</text>
+	<text x="170" y="172" text-anchor="middle" font-size="11" fill="#5a6d68" font-family="Segoe UI">Avril 2026</text>
+	<text x="410" y="156" text-anchor="middle" font-size="11" fill="#5a6d68" font-family="Segoe UI">IA description de scene</text>
+	<text x="410" y="172" text-anchor="middle" font-size="11" fill="#5a6d68" font-family="Segoe UI">Accessibilite (TalkBack)</text>
+	<text x="410" y="188" text-anchor="middle" font-size="11" fill="#5a6d68" font-family="Segoe UI">Tests utilisateurs — Mai 2026</text>
+	<text x="650" y="156" text-anchor="middle" font-size="11" fill="#5a6d68" font-family="Segoe UI">Rapport + Soutenance</text>
+	<text x="650" y="172" text-anchor="middle" font-size="11" fill="#5a6d68" font-family="Segoe UI">Juin 2026</text>
+</svg>

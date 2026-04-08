@@ -1,0 +1,56 @@
+<svg viewBox="0 0 820 360" width="820" height="360" xmlns="http://www.w3.org/2000/svg">
+	<rect x="10" y="10" width="800" height="340" rx="22" fill="#f8f6ef" stroke="#d7d1c2"/>
+	<text x="410" y="38" text-anchor="middle" font-size="16" fill="#5a6d68" font-family="Segoe UI">Architecture threads — Inputs / Outputs</text>
+	<text x="80" y="68" text-anchor="middle" font-size="14" fill="#173b36" font-family="Segoe UI" font-weight="bold">INPUTS</text>
+	<rect x="30" y="82" width="100" height="50" rx="14" fill="#eef6f5" stroke="#4e8c82" stroke-width="2"/>
+	<text x="80" y="104" text-anchor="middle" font-size="13" fill="#173b36" font-family="Segoe UI">Camera</text>
+	<text x="80" y="122" text-anchor="middle" font-size="10" fill="#5a6d68" font-family="Segoe UI">OpenCV</text>
+	<rect x="30" y="148" width="100" height="50" rx="14" fill="#eef6f5" stroke="#4e8c82" stroke-width="2"/>
+	<text x="80" y="170" text-anchor="middle" font-size="13" fill="#173b36" font-family="Segoe UI">Boutons</text>
+	<text x="80" y="188" text-anchor="middle" font-size="10" fill="#5a6d68" font-family="Segoe UI">Tactile (on_press)</text>
+	<rect x="30" y="214" width="100" height="50" rx="14" fill="#eef6f5" stroke="#4e8c82" stroke-width="2"/>
+	<text x="80" y="236" text-anchor="middle" font-size="13" fill="#173b36" font-family="Segoe UI">Micro</text>
+	<text x="80" y="254" text-anchor="middle" font-size="10" fill="#5a6d68" font-family="Segoe UI">SpeechRecognition</text>
+	<rect x="170" y="74" width="160" height="66" rx="16" fill="#fce8e8" stroke="#b56b6b" stroke-width="2" stroke-dasharray="6 4"/>
+	<text x="250" y="98" text-anchor="middle" font-size="13" fill="#7a3030" font-family="Segoe UI" font-weight="bold">Thread Camera</text>
+	<text x="250" y="116" text-anchor="middle" font-size="11" fill="#7a3030" font-family="Segoe UI">capture en continu</text>
+	<text x="250" y="132" text-anchor="middle" font-size="10" fill="#b56b6b" font-family="Segoe UI">→ envoie les frames</text>
+	<rect x="170" y="206" width="160" height="66" rx="16" fill="#fce8e8" stroke="#b56b6b" stroke-width="2" stroke-dasharray="6 4"/>
+	<text x="250" y="230" text-anchor="middle" font-size="13" fill="#7a3030" font-family="Segoe UI" font-weight="bold">Thread Ecoute</text>
+	<text x="250" y="248" text-anchor="middle" font-size="11" fill="#7a3030" font-family="Segoe UI">micro en permanence</text>
+	<text x="250" y="264" text-anchor="middle" font-size="10" fill="#b56b6b" font-family="Segoe UI">→ envoie les commandes</text>
+	<rect x="370" y="110" width="160" height="110" rx="20" fill="#fff7d1" stroke="#a88723" stroke-width="3"/>
+	<text x="450" y="140" text-anchor="middle" font-size="16" fill="#5a480e" font-family="Segoe UI" font-weight="bold">Thread Principal</text>
+	<text x="450" y="162" text-anchor="middle" font-size="13" fill="#5a480e" font-family="Segoe UI">Boucle UI Kivy</text>
+	<text x="450" y="182" text-anchor="middle" font-size="11" fill="#5a480e" font-family="Segoe UI">orchestre tout</text>
+	<text x="450" y="200" text-anchor="middle" font-size="11" fill="#5a480e" font-family="Segoe UI">ne doit jamais bloquer</text>
+	<rect x="570" y="192" width="160" height="66" rx="16" fill="#fce8e8" stroke="#b56b6b" stroke-width="2" stroke-dasharray="6 4"/>
+	<text x="650" y="216" text-anchor="middle" font-size="13" fill="#7a3030" font-family="Segoe UI" font-weight="bold">Thread TTS</text>
+	<text x="650" y="234" text-anchor="middle" font-size="11" fill="#7a3030" font-family="Segoe UI">file de messages</text>
+	<text x="650" y="250" text-anchor="middle" font-size="10" fill="#b56b6b" font-family="Segoe UI">lit un par un</text>
+	<text x="740" y="68" text-anchor="middle" font-size="14" fill="#173b36" font-family="Segoe UI" font-weight="bold">OUTPUTS</text>
+	<rect x="690" y="82" width="100" height="50" rx="14" fill="#eef6f5" stroke="#4e8c82" stroke-width="2"/>
+	<text x="740" y="104" text-anchor="middle" font-size="13" fill="#173b36" font-family="Segoe UI">Ecran</text>
+	<text x="740" y="122" text-anchor="middle" font-size="10" fill="#5a6d68" font-family="Segoe UI">Kivy Texture</text>
+	<rect x="690" y="268" width="100" height="50" rx="14" fill="#eef6f5" stroke="#4e8c82" stroke-width="2"/>
+	<text x="740" y="290" text-anchor="middle" font-size="13" fill="#173b36" font-family="Segoe UI">Haut-parleur</text>
+	<text x="740" y="308" text-anchor="middle" font-size="10" fill="#5a6d68" font-family="Segoe UI">Voix synthetisee</text>
+	<path d="M130 107 H168" stroke="#4e8c82" stroke-width="2.5"/>
+	<polygon points="164,101 178,107 164,113" fill="#4e8c82"/>
+	<path d="M130 173 H370" stroke="#4e8c82" stroke-width="2.5"/>
+	<polygon points="364,167 378,173 364,179" fill="#4e8c82"/>
+	<path d="M130 239 H168" stroke="#4e8c82" stroke-width="2.5"/>
+	<polygon points="164,233 178,239 164,245" fill="#4e8c82"/>
+	<path d="M330 107 Q350 130 370 145" stroke="#b56b6b" stroke-width="2.5"/>
+	<polygon points="364,140 376,148 368,152" fill="#b56b6b"/>
+	<path d="M330 239 Q350 210 370 190" stroke="#b56b6b" stroke-width="2.5"/>
+	<polygon points="364,186 376,188 368,196" fill="#b56b6b"/>
+	<path d="M530 145 Q610 120 688 107" stroke="#4e8c82" stroke-width="2.5"/>
+	<polygon points="682,101 696,107 684,113" fill="#4e8c82"/>
+	<path d="M530 190 Q550 210 568 220" stroke="#b56b6b" stroke-width="2.5"/>
+	<polygon points="562,214 576,222 566,228" fill="#b56b6b"/>
+	<path d="M730 258 V266" stroke="#4e8c82" stroke-width="2.5"/>
+	<polygon points="724,262 740,270 756,262" fill="#4e8c82"/>
+	<rect x="200" y="310" width="420" height="30" rx="10" fill="#ffffff" stroke="#b56b6b" stroke-dasharray="6 4"/>
+	<text x="410" y="330" text-anchor="middle" font-size="12" fill="#7a3030" font-family="Segoe UI">Bordure pointillee = thread separe (ne bloque pas l'UI)</text>
+</svg>
