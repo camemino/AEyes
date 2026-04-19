@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#000000">
+    <meta name="description" content="A-Eyes — assistive vision app for the visually impaired">
+    <title>A-Eyes</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- ══════════════════════════════════════════════════════════════════════
+       Écran principal — caméra + 4 boutons d'action
+       Correspond à MainScreen dans Kivy
+  ══════════════════════════════════════════════════════════════════════════ -->
+  <main id="main-screen" role="main" aria-label="A-Eyes main screen">
+
+    <!-- Zone caméra — affiche le flux vidéo ou un placeholder -->
+    <div id="camera-container" role="img" aria-label="Camera preview area">
+      <p id="camera-placeholder" aria-hidden="true">Camera off</p>
+      <video id="camera-view"
+             hidden
+             autoplay
+             playsinline
+             muted
+             aria-label="Live camera feed"></video>
+    </div>
+
+    <!-- Bouton SCAN — active/désactive le flux caméra -->
+    <button id="btn-scan"
+            class="btn btn-scan"
+            aria-label="Toggle camera"
+            aria-pressed="false">
+      SCAN
+    </button>
+
+    <!-- Bouton DESCRIBE — envoie un frame au backend pour analyse IA -->
+    <button id="btn-describe"
+            class="btn btn-describe"
+            aria-label="Describe the current scene">
+      DESCRIBE
+    </button>
+
+    <!-- Bouton REPEAT — relit le dernier message TTS -->
+    <button id="btn-repeat"
+            class="btn btn-repeat"
+            aria-label="Repeat last spoken message">
+      REPEAT
+    </button>
+
+    <!-- Bouton SETTINGS — navigue vers l'écran de réglages -->
+    <button id="btn-settings"
+            class="btn btn-settings"
+            aria-label="Open settings">
+      SETTINGS
+    </button>
+
+  </main>
+
+
+  <!-- ══════════════════════════════════════════════════════════════════════
+       Écran réglages — vitesse de parole
+       Correspond à SettingsScreen dans Kivy
+  ══════════════════════════════════════════════════════════════════════════ -->
+  <section id="settings-screen"
+           hidden
+           role="region"
+           aria-label="Settings screen">
+
+    <h1>SETTINGS</h1>
+
+    <label for="rate-slider">Speech rate</label>
+
+    <!-- Slider vitesse TTS — 80 à 250 mots/minute, défaut 160 -->
+    <input type="range"
+           id="rate-slider"
+           min="80" max="250" value="160" step="10"
+           aria-valuemin="80" aria-valuemax="250" aria-valuenow="160"
+           aria-label="Speech rate in words per minute">
+
+    <!-- Valeur courante affichée et annoncée aux lecteurs d'écran -->
+    <output id="rate-value"
+            for="rate-slider"
+            aria-live="polite">160 words/min</output>
+
+    <!-- Bouton retour -->
+    <button id="btn-back"
+            class="btn btn-back"
+            aria-label="Save settings and return to main screen">
+      ← BACK
+    </button>
+
+  </section>
+
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

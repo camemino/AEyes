@@ -1,0 +1,197 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   style.css — A-Eyes Web UI
+   Reprend fidèlement les couleurs et tailles de Src/config.py.
+   Fort contraste pour utilisateurs malvoyants.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ── Variables (équivalents CSS de config.py) ─────────────────────────────── */
+:root {
+  /* Couleurs — converties depuis les tuples RGBA Kivy (0–1) vers CSS */
+  --bg-color:       #000000;   /* BG_COLOR       (0, 0, 0)           */
+  --btn-scan:       #ffcc00;   /* BTN_SCAN_COLOR  (1, 0.8, 0)         */
+  --btn-desc:       #1ab34d;   /* BTN_DESC_COLOR  (0.1, 0.7, 0.3)     */
+  --btn-rep:        #3399ff;   /* BTN_REP_COLOR   (0.2, 0.6, 1)       */
+  --btn-set:        #4d4d4d;   /* BTN_SET_COLOR   (0.3, 0.3, 0.3)     */
+  --text-dark:      #000000;   /* BTN_DARK_TEXT                       */
+  --text-light:     #ffffff;   /* BTN_LIGHT_TEXT                      */
+  --text-accent:    #ffcc00;
+
+  /* Typographie — sp → px (1sp ≈ 1px sur écran standard) */
+  --font-xl:  36px;   /* FONT_SIZE_XL */
+  --font-l:   32px;   /* FONT_SIZE_L  */
+  --font-m:   26px;   /* FONT_SIZE_M  */
+  --font-s:   22px;   /* FONT_SIZE_S  */
+
+  /* Hauteurs boutons — dp → px */
+  --btn-h-xl: 110px;  /* BTN_HEIGHT_XL */
+  --btn-h-l:   95px;  /* BTN_HEIGHT_L  */
+  --btn-h-m:   80px;  /* BTN_HEIGHT_M  */
+  --btn-h-s:   65px;  /* BTN_HEIGHT_S  */
+
+  /* Espacements */
+  --padding: 18px;    /* PADDING  */
+  --spacing: 12px;    /* SPACING  */
+}
+
+/* ── Reset ───────────────────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Force l'attribut HTML `hidden` à toujours masquer l'élément,
+   même si une règle CSS plus spécifique (ex: #settings-screen { display:flex })
+   tenterait de le remplacer. Sans ce correctif, les deux écrans s'affichent
+   simultanément car l'ID selector a une spécificité supérieure à [hidden]. */
+[hidden] { display: none !important; }
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+  background: var(--bg-color);
+  color: var(--text-light);
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+/* ── Écrans (screens) ────────────────────────────────────────────────────── */
+/* Chaque écran occupe toute la hauteur de la fenêtre */
+#main-screen,
+#settings-screen {
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;          /* dvh = prend en compte la barre d'adresse mobile */
+  padding: var(--padding);
+  gap: var(--spacing);
+}
+
+/* ── Zone caméra ─────────────────────────────────────────────────────────── */
+#camera-container {
+  flex: 1;              /* prend tout l'espace disponible (comme size_hint: 0.5 côté Kivy) */
+  min-height: 0;        /* nécessaire pour que flex: 1 fonctionne dans une colonne */
+  position: relative;
+  background: #111111;
+  border-radius: 8px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#camera-placeholder {
+  color: #555555;
+  font-size: var(--font-m);
+  text-align: center;
+  pointer-events: none;
+  user-select: none;
+}
+
+#camera-view {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+/* ── Boutons (communs) ───────────────────────────────────────────────────── */
+.btn {
+  display: block;
+  width: 100%;
+  flex-shrink: 0;
+  border: none;
+  border-radius: 8px;
+  font-size: var(--font-l);
+  font-weight: bold;
+  cursor: pointer;
+  line-height: 1;
+  transition: opacity 0.12s;
+}
+
+.btn:active  { opacity: 0.72; }
+
+/* Indicateur de focus visible — indispensable pour l'accessibilité clavier */
+.btn:focus-visible {
+  outline: 4px solid var(--btn-scan);
+  outline-offset: 3px;
+}
+
+/* ── Boutons spécifiques ─────────────────────────────────────────────────── */
+.btn-scan {
+  background: var(--btn-scan);
+  color: var(--text-dark);      /* noir sur jaune = contraste maximal */
+  height: var(--btn-h-xl);
+  font-size: var(--font-xl);
+}
+
+.btn-describe {
+  background: var(--btn-desc);
+  color: var(--text-light);
+  height: var(--btn-h-l);
+}
+
+.btn-repeat {
+  background: var(--btn-rep);
+  color: var(--text-light);
+  height: var(--btn-h-m);
+  font-size: var(--font-m);
+}
+
+.btn-settings {
+  background: var(--btn-set);
+  color: var(--text-light);
+  height: var(--btn-h-s);
+  font-size: var(--font-s);
+}
+
+/* ── Écran réglages ──────────────────────────────────────────────────────── */
+#settings-screen h1 {
+  font-size: 34px;
+  color: var(--text-light);
+  text-align: center;
+  padding: 12px 0;
+  flex-shrink: 0;
+}
+
+#settings-screen label {
+  font-size: var(--font-m);
+  color: #cccccc;
+  flex-shrink: 0;
+}
+
+#rate-slider {
+  width: 100%;
+  height: 60px;
+  accent-color: var(--btn-scan);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+#rate-value {
+  display: block;
+  font-size: var(--font-s);
+  color: var(--text-accent);
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.btn-back {
+  margin-top: auto;       /* pousse le bouton en bas de l'écran */
+  background: var(--btn-set);
+  color: var(--text-light);
+  height: var(--btn-h-m);
+  font-size: var(--font-m);
+}
+
+/* ── Responsive — mobile portrait (petits écrans) ────────────────────────── */
+@media (max-width: 480px) {
+  :root {
+    --font-xl: 28px;
+    --font-l:  24px;
+    --font-m:  20px;
+    --font-s:  17px;
+    --btn-h-xl: 90px;
+    --btn-h-l:  78px;
+    --btn-h-m:  65px;
+    --btn-h-s:  54px;
+  }
+}
