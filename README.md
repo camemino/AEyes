@@ -16,7 +16,11 @@ Src/       Application Kivy (version bureau, indépendante)
 2. Sur [render.com](https://render.com) → **New** → **Blueprint**.
 3. Connectez votre repo GitHub — Render détecte automatiquement le fichier `render.yaml`.
 4. Cliquez **Apply** — le service `a-eyes` sera créé et déployé.
-5. Une fois le build terminé, accédez à l'URL fournie par Render.
+5. Dans le dashboard Render → votre service → **Environment**, ajoutez la variable :
+   - `OPENAI_API_KEY` = votre clé OpenAI (`sk-...`)
+6. Une fois le build terminé, accédez à l'URL fournie par Render.
+
+> **Auto-Deploy** : Render redéploie automatiquement le service à chaque push sur `main`.
 
 > **Note** : sur le plan gratuit, le service se met en veille après 15 min d'inactivité  
 > et redémarre (~30 s) à la prochaine requête.
@@ -39,8 +43,14 @@ Ouvrez <http://localhost:8000>.
 
 ## Variables d'environnement
 
-| Variable        | Description                        | Requis |
-|-----------------|------------------------------------|--------|
-| `OPENAI_API_KEY`| Clé API OpenAI (V1 — modèle vision)| Non    |
+| Variable | Description | Requis |
+|----------|-------------|--------|
+| `OPENAI_API_KEY` | Clé API OpenAI — modèle `gpt-4.1-mini` pour la description de scène | Oui (V1) |
 
-Créez un fichier `.env` à partir de `.env.example` pour le développement local.
+Pour le développement local, créez un fichier `.env` à la racine du dossier `backend/` :
+
+```
+OPENAI_API_KEY=sk-...
+```
+
+> Ne commitez jamais ce fichier — il est ignoré par `.gitignore`.

@@ -12,6 +12,5 @@ services:
     envVars:
       - key: PYTHON_VERSION
         value: "3.11"
-      # Décommentez et renseignez si vous branchez un modèle IA en V1 :
-      # - key: OPENAI_API_KEY
-      #   sync: false          # sync: false = valeur saisie manuellement dans le dashboard
+      - key: OPENAI_API_KEY
+        sync: false          # valeur saisie manuellement dans le dashboard Render

@@ -1,5 +1,13 @@
 # config.py — Constantes partagées entre le backend et (via CSS vars) le frontend.
 
+import os
+from dotenv import load_dotenv
+
+load_dotenv()  # charge backend/.env en local, sans effet si la variable est déjà définie
+
+# ── OpenAI ────────────────────────────────────────────────────────────────────
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+
 # ── TTS (Text-To-Speech) ──────────────────────────────────────────────────────
 TTS_RATE_DEFAULT = 160   # Vitesse par défaut en mots/minute
 TTS_RATE_MIN     = 80    # Vitesse minimale autorisée
