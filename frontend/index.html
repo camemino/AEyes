@@ -27,19 +27,25 @@
              aria-label="Live camera feed"></video>
     </div>
 
-    <!-- Bouton SCAN — active/désactive le flux caméra -->
-    <button id="btn-scan"
-            class="btn btn-scan"
-            aria-label="Toggle camera"
-            aria-pressed="false">
-      SCAN
-    </button>
+    <!-- Boutons DESCRIBE + TEXT — côte à côte -->
+    <div class="btn-row">
+      <button id="btn-describe"
+              class="btn btn-describe"
+              aria-label="Describe the current scene">
+        DESCRIBE
+      </button>
+      <button id="btn-text"
+              class="btn btn-text"
+              aria-label="Read text in the current scene">
+        TEXT
+      </button>
+    </div>
 
-    <!-- Bouton DESCRIBE — envoie un frame au backend pour analyse IA -->
-    <button id="btn-describe"
-            class="btn btn-describe"
-            aria-label="Describe the current scene">
-      DESCRIBE
+    <!-- Bouton ASK — pose une question sur la dernière image analysée -->
+    <button id="btn-ask"
+            class="btn btn-ask"
+            aria-label="Ask a question about the last image">
+      ASK
     </button>
 
     <!-- Bouton REPEAT — relit le dernier message TTS -->

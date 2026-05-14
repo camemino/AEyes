@@ -116,11 +116,15 @@ html, body {
 }
 
 /* ── Boutons spécifiques ─────────────────────────────────────────────────── */
-.btn-scan {
-  background: var(--btn-scan);
-  color: var(--text-dark);      /* noir sur jaune = contraste maximal */
-  height: var(--btn-h-xl);
-  font-size: var(--font-xl);
+/* Conteneur DESCRIBE + TEXT côte à côte */
+.btn-row {
+  display: flex;
+  gap: var(--spacing);
+  flex-shrink: 0;
+}
+
+.btn-row .btn {
+  flex: 1;
 }
 
 .btn-describe {
@@ -129,7 +133,17 @@ html, body {
   height: var(--btn-h-l);
 }
 
-.btn-repeat {
+.btn-text {
+  background: #FF8C00;
+  color: var(--text-light);
+  height: var(--btn-h-l);
+}
+
+.btn-ask {
+  background: #7B2FBE;
+  color: var(--text-light);
+  height: var(--btn-h-m);
+}
   background: var(--btn-rep);
   color: var(--text-light);
   height: var(--btn-h-m);

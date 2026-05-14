@@ -15,7 +15,7 @@
  * @type {Record<string, string>}
  */
 const COMMANDS = {
-  scan:     'scan',
+  text:     'text',
   describe: 'describe',
   repeat:   'repeat',
   settings: 'settings',
@@ -29,9 +29,10 @@ export class VoiceListener {
    *   Callback appelé avec l'identifiant de commande détecté.
    */
   constructor(onCommand) {
-    this._onCommand = onCommand;
-    this._active    = false;
-    this._recognition = null;
+    this._onCommand      = onCommand;
+    this._active         = false;
+    this._recognition    = null;
+    this._captureCallback = null;
 
     const SpeechRecognition =
       window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -84,14 +85,42 @@ export class VoiceListener {
    * Traite un résultat de reconnaissance et déclenche le callback si un mot-clé correspond.
    * @param {SpeechRecognitionEvent} event
    */
+  /**
+   * Capture la prochaine transcription vocale comme texte libre (mode question).
+   * @param {(transcript: string) => void} callback
+   */
+  captureOnce(callback) {
+    this._captureCallback = callback;
+  }
+
   _handleResult(event) {
     const lastResult = event.results[event.results.length - 1];
-    const transcript = lastResult[0].transcript.trim().toLowerCase();
+    const transcript = lastResult[0].transcript.trim();
+
+    // Mode capture (bouton ASK) : la prochaine phrase est la question
+    if (this._captureCallback) {
+      const cb = this._captureCallback;
+      this._captureCallback = null;
+      cb(transcript);
+      return;
+    }
+
+    const lower = transcript.toLowerCase();
+
+    // Option A : "ask <question>" en une seule phrase
+    const askIdx = lower.indexOf('ask ');
+    if (askIdx !== -1) {
+      const question = transcript.slice(askIdx + 4).trim();
+      if (question) {
+        this._onCommand('ask:' + question);
+        return;
+      }
+    }
 
     for (const [keyword, command] of Object.entries(COMMANDS)) {
-      if (transcript.includes(keyword)) {
+      if (lower.includes(keyword)) {
         this._onCommand(command);
-        return; // une seule commande par phrase
+        return;
       }
     }
   }
