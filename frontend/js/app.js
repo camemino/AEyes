@@ -18,12 +18,9 @@ import { VoiceListener } from './voice.js';
 class AEyesApp {
   constructor() {
     // ── Références DOM ─────────────────────────────────────────────────────
-    this._mainScreen     = document.getElementById('main-screen');
-    this._settingsScreen = document.getElementById('settings-screen');
-    this._videoEl        = document.getElementById('camera-view');
-    this._placeholder    = document.getElementById('camera-placeholder');
-    this._rateSlider     = document.getElementById('rate-slider');
-    this._rateValue      = document.getElementById('rate-value');
+    this._mainScreen  = document.getElementById('main-screen');
+    this._videoEl     = document.getElementById('camera-view');
+    this._placeholder = document.getElementById('camera-placeholder');
 
     // ── Modules métier ─────────────────────────────────────────────────────
     this._cam   = new Camera();
@@ -35,24 +32,44 @@ class AEyesApp {
     /** @type {Array<{role: string, content: string}>} Historique de la conversation ASK */
     this._chatHistory = [];
 
+    /** Boutons d'action — désactivés pendant tout traitement */
+    this._actionBtns = [
+      document.getElementById('btn-describe'),
+      document.getElementById('btn-text'),
+      document.getElementById('btn-details'),
+      document.getElementById('btn-ask'),
+    ];
+
     // ── Branchements événements ──────────────────────────────────────────────────────────
     document.getElementById('btn-describe')
       .addEventListener('click', () => this.onDescribe());
     document.getElementById('btn-text')
       .addEventListener('click', () => this.onText());
+    document.getElementById('btn-details')
+      .addEventListener('click', () => this.onDetails());
     document.getElementById('btn-ask')
       .addEventListener('click', () => this.onAsk());
     document.getElementById('btn-repeat')
       .addEventListener('click', () => this.onRepeat());
-    document.getElementById('btn-settings')
-      .addEventListener('click', () => this.goToSettings());
-    document.getElementById('btn-back')
-      .addEventListener('click', () => this.goBack());
-    this._rateSlider
-      .addEventListener('input', e => this.onRateChange(Number(e.target.value)));
 
     // ── Démarrage ──────────────────────────────────────────────────────────
     this._enterMain();
+  }
+
+  // ── État occupé / libre ─────────────────────────────────────────────
+
+  /** Désactive les boutons d'action + arrête la reconnaissance vocale + vibration courte. */
+  _setBusy() {
+    this._actionBtns.forEach(b => { b.disabled = true; });
+    this._voice.stopListening();
+    navigator.vibrate?.(80);
+  }
+
+  /** Réactive les boutons d'action + redémarre la reconnaissance vocale + double vibration. */
+  _setIdle() {
+    this._actionBtns.forEach(b => { b.disabled = false; });
+    this._voice.startListening();
+    navigator.vibrate?.([80, 60, 80]);
   }
 
   // ── Navigation ────────────────────────────────────────────────────────────
@@ -62,20 +79,14 @@ class AEyesApp {
    * Équivalent de MainScreen.on_enter() dans Kivy.
    */
   _enterMain() {
-    this._mainScreen.hidden     = false;
-    this._settingsScreen.hidden = true;
-    this._tts.speak('A-Eyes ready. Say describe, text, repeat, settings or stop.');
-    this._voice.startListening();
+    this._mainScreen.hidden = false;
     this._startCamera();
-  }
-
-  /**
-   * Prépare le départ de l'écran principal : arrête caméra et voix.
-   * Équivalent de MainScreen.on_leave() dans Kivy.
-   */
-  _leaveMain() {
-    this._stopCamera();
-    this._voice.stopListening();
+    // Démarre l'écoute vocale seulement après le message d'accueil,
+    // pour éviter que le TTS soit capté par le micro.
+    this._tts.speak(
+      'A-Eyes ready. Say describe, text, details, repeat or stop.',
+      () => this._voice.startListening()
+    );
   }
 
   /** Démarre le flux caméra automatiquement. */
@@ -87,27 +98,6 @@ class AEyesApp {
     } else {
       this._tts.speak('Camera unavailable. Please check permissions.');
     }
-  }
-
-  /**
-   * Navigue vers l'écran de réglages.
-   * Équivalent de MainScreen.go_to_settings() + SettingsScreen.on_enter().
-   */
-  goToSettings() {
-    this._leaveMain();
-    this._mainScreen.hidden     = true;
-    this._settingsScreen.hidden = false;
-    this._tts.speak('Settings screen. Use the slider to adjust the speech rate.');
-  }
-
-  /**
-   * Retourne à l'écran principal depuis les réglages.
-   * Équivalent de SettingsScreen.go_back() dans Kivy.
-   */
-  goBack() {
-    this._tts.speak('Settings saved.');
-    this._settingsScreen.hidden = true;
-    this._enterMain();
   }
 
   // ── Caméra ────────────────────────────────────────────────────────────────
@@ -139,11 +129,12 @@ class AEyesApp {
       return;
     }
 
+    this._setBusy();
     this._tts.speak('Analysing scene...');
 
     const dataURL = this._cam.captureFrame();
     if (!dataURL) {
-      this._tts.speak('Could not capture frame.');
+      this._tts.speak('Could not capture frame.', () => this._setIdle());
       return;
     }
 
@@ -151,7 +142,6 @@ class AEyesApp {
     this._chatHistory = [];
 
     try {
-      // Convertit le Data URL en Blob pour l'envoi multipart
       const blob = await fetch(dataURL).then(r => r.blob());
       const form = new FormData();
       form.append('file', blob, 'frame.jpg');
@@ -160,10 +150,10 @@ class AEyesApp {
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
       const { text } = await res.json();
-      this._tts.speak(text);
+      this._tts.speak(text, () => this._setIdle());
     } catch (err) {
       console.error('[DESCRIBE]', err);
-      this._tts.speak('Analysis failed. Please check your connection.');
+      this._tts.speak('Analysis failed. Please check your connection.', () => this._setIdle());
     }
   }
   /**
@@ -176,11 +166,12 @@ class AEyesApp {
       return;
     }
 
+    this._setBusy();
     this._tts.speak('Reading text...');
 
     const dataURL = this._cam.captureFrame();
     if (!dataURL) {
-      this._tts.speak('Could not capture frame.');
+      this._tts.speak('Could not capture frame.', () => this._setIdle());
       return;
     }
 
@@ -196,12 +187,41 @@ class AEyesApp {
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
       const { text } = await res.json();
-      this._tts.speak(text);
+      this._tts.speak(text, () => this._setIdle());
     } catch (err) {
       console.error('[TEXT]', err);
-      this._tts.speak('Text reading failed. Please check your connection.');
+      this._tts.speak('Text reading failed. Please check your connection.', () => this._setIdle());
     }
   }
+  /**
+   * Envoie _lastFrame à /api/details et vocalise la description détaillée.
+   * Utilise la dernière image capturée par DESCRIBE ou TEXT — pas de nouvelle capture.
+   */
+  async onDetails() {
+    if (!this._lastFrame) {
+      this._tts.speak('Please describe or read text first.');
+      return;
+    }
+
+    this._setBusy();
+    this._tts.speak('Analysing in detail...');
+
+    try {
+      const blob = await fetch(this._lastFrame).then(r => r.blob());
+      const form = new FormData();
+      form.append('file', blob, 'frame.jpg');
+
+      const res = await fetch('/api/details', { method: 'POST', body: form });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+      const { text } = await res.json();
+      this._tts.speak(text, () => this._setIdle());
+    } catch (err) {
+      console.error('[DETAILS]', err);
+      this._tts.speak('Analysis failed. Please check your connection.', () => this._setIdle());
+    }
+  }
+
   // ── Questions (ASK) ─────────────────────────────────────────────────────────────
 
   onAsk() {
@@ -209,17 +229,24 @@ class AEyesApp {
       this._tts.speak('Please describe or read text first.');
       return;
     }
-    this._tts.speak('Speak your question.');
-    this._voice.captureOnce(question => {
-      if (!question || !question.trim()) {
-        this._tts.speak('No question detected. Please try again.');
-        return;
-      }
-      this._sendQuestion(question.trim());
+    // Stop listening pendant le TTS "Speak your question.",
+    // puis redémarre pour capturer la question de l'utilisateur.
+    this._voice.stopListening();
+    this._tts.speak('Speak your question.', () => {
+      this._voice.startListening();
+      this._voice.captureOnce(question => {
+        this._voice.stopListening();
+        if (!question || !question.trim()) {
+          this._tts.speak('No question detected. Please try again.', () => this._setIdle());
+          return;
+        }
+        this._sendQuestion(question.trim());
+      });
     });
   }
 
   async _sendQuestion(question) {
+    this._setBusy();
     this._tts.speak('Thinking...');
     try {
       const blob = await fetch(this._lastFrame).then(r => r.blob());
@@ -235,29 +262,18 @@ class AEyesApp {
       this._chatHistory.push({ role: 'user',      content: question });
       this._chatHistory.push({ role: 'assistant', content: text     });
 
-      this._tts.speak(text);
+      this._tts.speak(text, () => this._setIdle());
     } catch (err) {
       console.error('[ASK]', err);
-      this._tts.speak('Could not get an answer. Please try again.');
+      this._tts.speak('Could not get an answer. Please try again.', () => this._setIdle());
     }
   }
   // ── TTS ───────────────────────────────────────────────────────────────────
 
   /** Relit le dernier message. Équivalent de MainScreen.on_repeat(). */
   onRepeat() {
-    this._tts.repeat();
-  }
-
-  /**
-   * Met à jour la vitesse TTS et l'affichage de la valeur.
-   * Équivalent de SettingsScreen.on_rate_change() dans Kivy.
-   *
-   * @param {number} wpm — valeur du slider (80–250)
-   */
-  onRateChange(wpm) {
-    this._tts.setRate(wpm);
-    this._rateValue.textContent = `${wpm} words/min`;
-    this._rateSlider.setAttribute('aria-valuenow', String(wpm));
+    this._voice.stopListening();
+    this._tts.repeat(() => this._voice.startListening());
   }
 
   // ── Commandes vocales ─────────────────────────────────────────────────────
@@ -283,13 +299,17 @@ class AEyesApp {
     const actions = {
       text:     () => this.onText(),
       describe: () => this.onDescribe(),
+      details:  () => this.onDetails(),
       ask:      () => this.onAsk(),
       repeat:   () => this.onRepeat(),
-      settings: () => this.goToSettings(),
-      stop:     () => { this._stopCamera(); this._tts.speak('Camera off.'); },
-      help:     () => this._tts.speak(
-        'Available commands: describe, text, ask [question], repeat, settings, stop.'
-      ),
+      stop: () => { this._tts.cancel(); this._setIdle(); },
+      help: () => {
+        this._voice.stopListening();
+        this._tts.speak(
+          'Available commands: describe, text, details, ask, repeat, stop.',
+          () => this._voice.startListening()
+        );
+      },
     };
     (actions[command] ?? (() => {}))();
   }

@@ -14,17 +14,11 @@ from fastapi import APIRouter, File, Form, UploadFile
 from fastapi.responses import JSONResponse
 
 from config import OPENAI_API_KEY
+from prompts import ASK_PROMPT
 
 logger = logging.getLogger(__name__)
 
 router = APIRouter()
-
-_SYSTEM_PROMPT = (
-    "You are a visual assistant helping a visually impaired person understand an image. "
-    "Answer their questions about the image clearly and concisely, "
-    "in a way suitable for text-to-speech reading. "
-    "Keep your answers brief — 1 to 3 sentences — unless the user explicitly asks for more detail."
-)
 
 _client = openai.AsyncOpenAI(api_key=OPENAI_API_KEY)
 
@@ -58,7 +52,7 @@ async def ask_image(
         except (json.JSONDecodeError, ValueError):
             history_data = []
 
-        messages = [{"role": "system", "content": _SYSTEM_PROMPT}]
+        messages = [{"role": "system", "content": ASK_PROMPT}]
 
         if not history_data:
             # Première question : image + question dans le même message utilisateur

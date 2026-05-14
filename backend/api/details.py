@@ -1,7 +1,8 @@
 """
-describe.py — Endpoint FastAPI pour l'analyse d'image.
+details.py — Endpoint FastAPI pour la description détaillée d'une image.
 
-V1 : appel à GPT-4.1-mini (OpenAI) avec un prompt orienté description TTS pour malvoyants.
+Complément de describe.py : fournit une description complète (objets, personnes,
+couleurs, textures, disposition) destinée aux utilisateurs souhaitant plus d'information.
 """
 
 import base64
@@ -12,7 +13,7 @@ from fastapi import APIRouter, UploadFile, File
 from fastapi.responses import JSONResponse
 
 from config import OPENAI_API_KEY
-from prompts import DESCRIBE_PROMPT
+from prompts import DETAILS_PROMPT
 
 logger = logging.getLogger(__name__)
 
@@ -21,16 +22,16 @@ router = APIRouter()
 _client = openai.AsyncOpenAI(api_key=OPENAI_API_KEY)
 
 
-@router.post("/describe")
-async def describe_image(file: UploadFile = File(...)):
+@router.post("/details")
+async def describe_details(file: UploadFile = File(...)):
     """
-    Reçoit un frame JPEG et retourne une description textuelle de la scène.
+    Reçoit un frame JPEG et retourne une description détaillée de la scène.
 
     Args:
         file: Image JPEG capturée depuis la caméra du navigateur.
 
     Returns:
-        JSON {"text": "..."} — description à lire via TTS.
+        JSON {"text": "..."} — description détaillée à lire via TTS.
     """
     try:
         image_bytes = await file.read()
@@ -39,7 +40,7 @@ async def describe_image(file: UploadFile = File(...)):
         response = await _client.chat.completions.create(
             model="gpt-4.1-mini",
             messages=[
-                {"role": "system", "content": DESCRIBE_PROMPT},
+                {"role": "system", "content": DETAILS_PROMPT},
                 {
                     "role": "user",
                     "content": [
@@ -50,7 +51,7 @@ async def describe_image(file: UploadFile = File(...)):
                     ],
                 },
             ],
-            max_tokens=200,
+            max_tokens=500,
         )
 
         text = response.choices[0].message.content
@@ -59,7 +60,6 @@ async def describe_image(file: UploadFile = File(...)):
     except openai.OpenAIError as exc:
         logger.error("OpenAI error: %s", exc)
         return JSONResponse(
-            {"text": "Unable to analyze the image at the moment."},
+            {"text": "Unable to analyse the image at the moment."},
             status_code=502,
         )
-

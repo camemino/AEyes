@@ -2,9 +2,7 @@
 
 ## Contexte
 
-V3 : ajout de fonctionnalités statiques à l'application.
-- Suppression du bouton SCAN (caméra ouverte par défaut).
-- Nouvelle feature **Text** (OCR — détection et lecture du texte visible).
+V3 : améliorations de l'expérience utilisateur et nouvelles fonctionnalités.
 
 ---
 
@@ -15,32 +13,74 @@ V3 : ajout de fonctionnalités statiques à l'application.
 | Fichier | Changement | Statut |
 |---------|-----------|--------|
 | `frontend/index.html` | Suppression `<button id="btn-scan">` | ✅ |
-| `frontend/js/app.js` | Suppression `this._btnScan`, `this._scanning`, `toggleScan()` | ✅ |
-| `frontend/js/app.js` | `_enterMain()` appelle `_startCamera()` au démarrage | ✅ |
-| `frontend/js/app.js` | `_stopCamera()` utilise `this._cam.isOpen` (plus de ref btnScan) | ✅ |
-| `frontend/js/app.js` | Retrait commande vocale 'scan' de `_handleCommand()` | ✅ |
+| `frontend/js/app.js` | Suppression `toggleScan()`, caméra auto dans `_enterMain()` | ✅ |
 | `frontend/js/voice.js` | Retrait `scan` de la table `COMMANDS` | ✅ |
-| `frontend/css/style.css` | Suppression du bloc `.btn-scan` | ✅ |
+| `frontend/css/style.css` | Suppression bloc `.btn-scan` | ✅ |
 
 ### Phase 2 — Feature Text (OCR)
 
 | Fichier | Changement | Statut |
 |---------|-----------|--------|
-| `backend/api/text.py` | Nouveau endpoint `POST /api/text` (OCR GPT-4.1-mini) | ✅ |
-| `backend/main.py` | Import et inclusion du router `text_router` | ✅ |
-| `frontend/index.html` | Ajout `<button id="btn-text">TEXT</button>` | ✅ |
-| `frontend/js/app.js` | Ajout `onText()`, listener btn-text | ✅ |
-| `frontend/js/app.js` | Ajout commande vocale 'text' dans `_handleCommand()` | ✅ |
-| `frontend/js/voice.js` | Ajout `text` dans la table `COMMANDS` | ✅ |
-| `frontend/css/style.css` | Ajout `.btn-text { background: #FF8C00; }` | ✅ |
+| `backend/api/text.py` | Nouveau endpoint `POST /api/text` | ✅ |
+| `backend/main.py` | Import et inclusion de `text_router` | ✅ |
+| `frontend/index.html` | Ajout `<button id="btn-text">` | ✅ |
+| `frontend/js/app.js` | Ajout `onText()`, listener btn-text, commande vocale | ✅ |
+| `frontend/js/voice.js` | Ajout `text` dans `COMMANDS` | ✅ |
+| `frontend/css/style.css` | Ajout `.btn-text { background: #FF8C00 }` | ✅ |
 
-### Phase 3 — Documentation V3
+### Phase 3 — Feature Details
 
-| Fichier | Contenu | Statut |
-|---------|---------|--------|
-| `Docs/V3/architecture_V3.md` | Architecture mise à jour, diagrammes de séquence, endpoint `/api/text` | ✅ |
-| `Docs/V3/fonctionnalites_V3.md` | Rationale UX, feature Text, scénario Ahmed, tableau de comparaison | ✅ |
-| `Docs/V3/suivi_projet_V3.md` | Ce document | ✅ |
+| Fichier | Changement | Statut |
+|---------|-----------|--------|
+| `backend/api/details.py` | Nouveau endpoint `POST /api/details` (2-3 phrases, max_tokens: 500) | ✅ |
+| `backend/main.py` | Import et inclusion de `details_router` | ✅ |
+| `frontend/index.html` | Ajout `<button id="btn-details">` | ✅ |
+| `frontend/js/app.js` | Ajout `onDetails()` (utilise `_lastFrame`, pas de capture) | ✅ |
+| `frontend/js/voice.js` | Ajout `details` dans `COMMANDS` | ✅ |
+| `frontend/css/style.css` | Ajout `.btn-details { background: #0a7a3e }` | ✅ |
+
+### Phase 4 — Suppression de l'écran Settings
+
+| Fichier | Changement | Statut |
+|---------|-----------|--------|
+| `frontend/index.html` | Suppression bouton SETTINGS et section `#settings-screen` | ✅ |
+| `frontend/js/app.js` | Suppression `goToSettings()`, `goBack()`, `onRateChange()`, `_leaveMain()` | ✅ |
+| `frontend/js/voice.js` | Retrait `settings` de `COMMANDS` | ✅ |
+| `frontend/css/style.css` | Suppression `.btn-settings`, `.btn-back`, styles `#settings-screen` | ✅ |
+
+### Phase 5 — Anti-boucle vocale TTS (solution finale)
+
+| Fichier | Changement | Statut |
+|---------|-----------|--------|
+| `frontend/js/voice.js` | Ajout `startListening()` / `stopListening()` | ✅ |
+| `frontend/js/tts.js` | Refactorisation — `speak(text, onEnd)` avec callback direct, `u.onerror` fallback Chrome | ✅ |
+| `frontend/js/app.js` | `_setBusy()` → `stopListening()` ; `_setIdle()` → `startListening()` dans callback TTS final | ✅ |
+| `frontend/js/app.js` | Commande `stop` → `tts.cancel()` + `_setIdle()` (caméra non affectée) | ✅ |
+
+### Phase 6 — Prompt DESCRIBE raccourci
+
+| Fichier | Changement | Statut |
+|---------|-----------|--------|
+| `backend/api/describe.py` | Prompt réduit à 1 phrase < 20 mots (vue d'ensemble) | ✅ |
+
+### Phase 7 — Retour haptique
+
+| Fichier | Changement | Statut |
+|---------|-----------|--------|
+| `frontend/js/app.js` | `_setBusy()` → `navigator.vibrate?.(80)` ; `_setIdle()` → `navigator.vibrate?.([80, 60, 80])` | ✅ |
+
+### Phase 8 — Désactivation des boutons pendant traitement
+
+| Fichier | Changement | Statut |
+|---------|-----------|--------|
+| `frontend/js/app.js` | `_setBusy()` → `_actionBtns.forEach(b => b.disabled = true)` ; `_setIdle()` → `b.disabled = false` | ✅ |
+
+### Phase 9 — Réorganisation des boutons
+
+| Fichier | Changement | Statut |
+|---------|-----------|--------|
+| `frontend/index.html` | DESCRIBE pleine largeur, TEXT + DETAILS + ASK sur même ligne | ✅ |
+| `frontend/css/style.css` | TEXT, DETAILS, ASK à `height: 80px` identiques | ✅ |
 
 ---
 
@@ -48,18 +88,22 @@ V3 : ajout de fonctionnalités statiques à l'application.
 
 | Test | Attendu | Statut |
 |------|---------|--------|
-| Ouverture de l'app | Caméra démarre sans clic, TTS "A-Eyes ready..." | À tester |
+| Ouverture de l'app | Caméra démarre, TTS "A-Eyes ready..." | À tester |
 | Permission caméra refusée | TTS "Camera unavailable. Please check permissions." | À tester |
-| Clic bouton DESCRIBE | TTS "Analysing scene..." → description de la scène | À tester |
-| Clic bouton TEXT (texte visible) | TTS "Reading text..." → texte détecté dicté | À tester |
+| Clic bouton DESCRIBE | TTS "Analysing scene..." → 1 phrase globale | À tester |
+| Clic bouton TEXT (texte visible) | TTS "Reading text..." → texte dicté | À tester |
 | Clic bouton TEXT (pas de texte) | TTS "No text detected in the image." | À tester |
-| Commande vocale "text" | Même comportement que clic bouton TEXT | À tester |
-| Commande vocale "describe" | Même comportement que clic bouton DESCRIBE | À tester |
-| Commande vocale "help" | TTS "Available commands: describe, text, repeat, settings, stop." | À tester |
-| Commande vocale "stop" | Caméra s'arrête, TTS "Camera off." | À tester |
+| Clic bouton DETAILS après DESCRIBE | TTS "Analysing in detail..." → 2-3 phrases | À tester |
+| Clic bouton DETAILS sans capture | TTS "Please describe or read text first." | À tester |
+| Clic bouton ASK | TTS "Speak your question." → attente voix → réponse | À tester |
+| Commande vocale pendant TTS ou API | Ignorée (micro arrêté — `stopListening`) | À tester |
+| Commande vocale "stop" pendant traitement | Lecture et traitement interrompus, caméra active | À tester |
+| Commande vocale "help" | TTS "Available commands: describe, text, details, ask, repeat, stop." | À tester |
 | Bouton REPEAT | Relit le dernier message | À tester |
-| Bouton SETTINGS → slider → BACK | Vitesse TTS mise à jour, retour écran principal + caméra auto | À tester |
-| `POST /api/text` via Swagger `/docs` | JSON `{"text": "..."}` retourné | À tester |
+| Vibration au déclenchement (DESCRIBE/TEXT/etc.) | Vibration courte 80 ms | À tester |
+| Vibration à la fin du traitement | Double vibration 80-60-80 ms | À tester |
+| Boutons désactivés pendant traitement | Clic sur bouton pendant analyse → ignoré | À tester |
+| `POST /api/details` via Swagger `/docs` | JSON `{"text": "..."}` retourné | À tester |
 
 ---
 
@@ -67,9 +111,10 @@ V3 : ajout de fonctionnalités statiques à l'application.
 
 | ID | Description | Priorité |
 |----|-------------|----------|
-| P-01 | La caméra se ferme si l'utilisateur navigue vers SETTINGS puis revient (comportement attendu, mais peut surprendre) | Faible |
-| P-02 | Sur Firefox, Web Speech API non supportée — les boutons restent fonctionnels mais les commandes vocales sont désactivées | Faible |
-| P-03 | Si la clé OpenAI est épuisée ou invalide, les deux endpoints retournent un message d'erreur vocal au lieu de planter silencieusement | Documenté |
+| P-01 | Sur Firefox, Web Speech API non supportée — boutons fonctionnels mais commandes vocales désactivées | Faible |
+| P-02 | Si la clé OpenAI est épuisée ou invalide, les endpoints retournent un message d'erreur vocal | Documenté |
+
+> Les problèmes rencontrés et leurs solutions détaillées sont documentés dans `Docs/V3/problemes_solutions_V3.md`.
 
 ---
 
@@ -78,4 +123,4 @@ V3 : ajout de fonctionnalités statiques à l'application.
 - PWA (Progressive Web App) : installation sur l'écran d'accueil mobile, mode hors-ligne partiel.
 - Internationalisation : détection de langue du texte OCR, adaptation de la voix TTS.
 - Historique vocal : navigation dans les dernières descriptions dictées.
-- Mode nuit automatique : réduction de la consommation de batterie (caméra basse résolution).
+

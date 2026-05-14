@@ -17,8 +17,8 @@
 const COMMANDS = {
   text:     'text',
   describe: 'describe',
+  details:  'details',
   repeat:   'repeat',
-  settings: 'settings',
   help:     'help',
   stop:     'stop',
 };
@@ -31,6 +31,7 @@ export class VoiceListener {
   constructor(onCommand) {
     this._onCommand      = onCommand;
     this._active         = false;
+    this._restricted     = false;
     this._recognition    = null;
     this._captureCallback = null;
 
@@ -65,6 +66,19 @@ export class VoiceListener {
         this._recognition.start();
       }
     };
+  }
+
+  /**
+   * Restreint les commandes vocales : seul "stop" passe pendant que le TTS parle.
+   * Évite que le micro capte la voix de synthèse et redéclenche une commande.
+   */
+  restrict() {
+    this._restricted = true;
+  }
+
+  /** Lève la restriction — toutes les commandes sont à nouveau actives. */
+  unrestrict() {
+    this._restricted = false;
   }
 
   /** Démarre l'écoute continue du microphone. */
@@ -106,6 +120,14 @@ export class VoiceListener {
     }
 
     const lower = transcript.toLowerCase();
+
+    // En mode restreint (TTS en cours), seul "stop" est autorisé
+    if (this._restricted) {
+      if (lower.includes('stop')) {
+        this._onCommand('stop');
+      }
+      return;
+    }
 
     // Option A : "ask <question>" en une seule phrase
     const askIdx = lower.indexOf('ask ');

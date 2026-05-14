@@ -25,23 +25,42 @@ export class Speaker {
    * Interrompt la lecture en cours et lit <text>.
    * Non-bloquant — retourne immédiatement (lecture asynchrone).
    *
-   * @param {string} text
+   * @param {string}        text
+   * @param {(() => void)|null} onEnd  Appelé quand la lecture se termine (fin naturelle OU erreur).
    */
-  speak(text) {
-    // Annule l'éventuelle lecture en cours pour éviter les files
+  speak(text, onEnd = null) {
     this._synth.cancel();
     this._lastMessage = text;
 
     const u = new SpeechSynthesisUtterance(text);
     u.rate = this._rate;
     u.lang = 'en-US';
+
+    if (onEnd) {
+      // onerror est le fallback : Chrome ne déclenche pas toujours onend
+      // après un cancel() précédent.
+      u.onend  = onEnd;
+      u.onerror = onEnd;
+    }
+
     this._synth.speak(u);
   }
 
-  /** Relit le dernier message prononcé. Équivalent de repeat() dans speaker.py. */
-  repeat() {
+  /**
+   * Interrompt immédiatement la lecture en cours.
+   */
+  cancel() {
+    this._synth.cancel();
+  }
+
+  /**
+   * Relit le dernier message prononcé.
+   *
+   * @param {(() => void)|null} onEnd  Optionnel — même sémantique que speak().
+   */
+  repeat(onEnd = null) {
     if (this._lastMessage) {
-      this.speak(this._lastMessage);
+      this.speak(this._lastMessage, onEnd);
     }
   }
 
@@ -51,7 +70,6 @@ export class Speaker {
    * @param {number} wpm — vitesse en mots/minute (80–250, défaut 160)
    */
   setRate(wpm) {
-    // Clamp entre les limites de l'API Web
     this._rate = Math.max(0.1, Math.min(10, wpm / 160));
   }
 }

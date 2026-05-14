@@ -13,18 +13,11 @@ from fastapi import APIRouter, UploadFile, File
 from fastapi.responses import JSONResponse
 
 from config import OPENAI_API_KEY
+from prompts import TEXT_PROMPT
 
 logger = logging.getLogger(__name__)
 
 router = APIRouter()
-
-_SYSTEM_PROMPT = (
-    "You are a text reading assistant for visually impaired people. "
-    "Read all visible text in this image exactly as it appears: "
-    "signs, labels, street names, prices, or any written words. "
-    "List them clearly. "
-    "If there is no text visible, respond with: No text detected in the image."
-)
 
 _client = openai.AsyncOpenAI(api_key=OPENAI_API_KEY)
 
@@ -47,7 +40,7 @@ async def read_text(file: UploadFile = File(...)):
         response = await _client.chat.completions.create(
             model="gpt-4.1-mini",
             messages=[
-                {"role": "system", "content": _SYSTEM_PROMPT},
+                {"role": "system", "content": TEXT_PROMPT},
                 {
                     "role": "user",
                     "content": [

@@ -22,6 +22,7 @@ sys.path.insert(0, os.path.dirname(__file__))
 from api.describe import router as describe_router  # noqa: E402
 from api.text    import router as text_router       # noqa: E402
 from api.ask     import router as ask_router        # noqa: E402
+from api.details import router as details_router    # noqa: E402
 
 app = FastAPI(title="A-Eyes API", version="0.1.0")
 
@@ -39,6 +40,7 @@ app.add_middleware(
 app.include_router(describe_router, prefix="/api")
 app.include_router(text_router,     prefix="/api")
 app.include_router(ask_router,      prefix="/api")
+app.include_router(details_router,  prefix="/api")
 
 # ── Fichiers statiques (frontend) ─────────────────────────────────────────────
 # Monté en dernier pour que les routes /api/* soient prioritaires.
