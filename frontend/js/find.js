@@ -93,6 +93,11 @@ export class Beeper {
   beepLost() {
     this._tone(220, 180, 220);
   }
+
+  /** Bip neutre très court — indique que l'analyse commence ("photo prise"). */
+  beepScan() {
+    this._tone(480, 480, 60);
+  }
 }
 
 
@@ -141,12 +146,13 @@ export class FindSession {
    * @param {string}                        deps.target
    * @param {() => void}                    deps.onDone   Appelé en fin de session (toutes raisons).
    */
-  constructor({ cam, tts, beeper, target, onDone }) {
-    this._cam    = cam;
-    this._tts    = tts;
-    this._beeper = beeper;
-    this._target = target;
-    this._onDone = onDone;
+  constructor({ cam, tts, beeper, target, onDone, onAnalysing = () => {} }) {
+    this._cam         = cam;
+    this._tts         = tts;
+    this._beeper      = beeper;
+    this._target      = target;
+    this._onDone      = onDone;
+    this._onAnalysing = onAnalysing;
 
     this._cancelled  = false;
     this._lastSpoken = null;
@@ -185,10 +191,14 @@ export class FindSession {
         form.append('file', blob, 'frame.jpg');
         form.append('target', this._target);
 
+        this._beeper.beepScan();
+        this._onAnalysing(true);
         const res = await fetch('/api/find', { method: 'POST', body: form });
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         result = await res.json();
+        this._onAnalysing(false);
       } catch (err) {
+        this._onAnalysing(false);
         console.error('[FIND]', err);
         this._tts.speak('Connection lost.', () => this._onDone());
         return;

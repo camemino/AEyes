@@ -37,8 +37,9 @@ class AEyesApp {
     this._findSession = null;
 
     // ── Overlay STOP (mode FIND) ───────────────────────────────────────────
-    this._findOverlay = document.getElementById('find-overlay');
-    this._findTargetEl = document.getElementById('find-target');
+    this._findOverlay   = document.getElementById('find-overlay');
+    this._findTargetEl  = document.getElementById('find-target');
+    this._findStatusEl  = document.getElementById('find-status');
     document.getElementById('btn-find-stop')
       ?.addEventListener('click', () => this._findSession?.cancel());
 
@@ -341,9 +342,13 @@ class AEyesApp {
       tts:    this._tts,
       beeper: this._beeper,
       target,
+      onAnalysing: (busy) => {
+        if (this._findStatusEl) this._findStatusEl.hidden = !busy;
+      },
       onDone: () => {
         this._findSession = null;
-        if (this._findOverlay) this._findOverlay.hidden = true;
+        if (this._findOverlay)  this._findOverlay.hidden = true;
+        if (this._findStatusEl) this._findStatusEl.hidden = true;
         this._setIdle();
       },
     });
