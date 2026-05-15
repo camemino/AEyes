@@ -21,6 +21,7 @@ const COMMANDS = {
   repeat:   'repeat',
   help:     'help',
   stop:     'stop',
+  find:     'find',
 };
 
 export class VoiceListener {
@@ -135,6 +136,16 @@ export class VoiceListener {
       const question = transcript.slice(askIdx + 4).trim();
       if (question) {
         this._onCommand('ask:' + question);
+        return;
+      }
+    }
+
+    // "find <target>" en une seule phrase
+    const findIdx = lower.indexOf('find ');
+    if (findIdx !== -1) {
+      const target = transcript.slice(findIdx + 5).trim();
+      if (target) {
+        this._onCommand('find:' + target);
         return;
       }
     }

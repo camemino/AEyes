@@ -14,6 +14,7 @@
 import { Camera }       from './camera.js';
 import { Speaker }      from './tts.js';
 import { VoiceListener } from './voice.js';
+import { Beeper, FindSession } from './find.js';
 
 class AEyesApp {
   constructor() {
@@ -23,14 +24,30 @@ class AEyesApp {
     this._placeholder = document.getElementById('camera-placeholder');
 
     // ── Modules métier ─────────────────────────────────────────────────────
-    this._cam   = new Camera();
-    this._tts   = new Speaker();
-    this._voice = new VoiceListener(cmd => this._handleCommand(cmd));
+    this._cam    = new Camera();
+    this._tts    = new Speaker();
+    this._beeper = new Beeper();
+    this._voice  = new VoiceListener(cmd => this._handleCommand(cmd));
 
     /** @type {string|null} Data URL du dernier frame capturé (DESCRIBE ou TEXT) */
     this._lastFrame   = null;
     /** @type {Array<{role: string, content: string}>} Historique de la conversation ASK */
     this._chatHistory = [];
+    /** @type {FindSession|null} Session FIND en cours, sinon null */
+    this._findSession = null;
+
+    // ── Overlay STOP (mode FIND) ───────────────────────────────────────────
+    this._findOverlay = document.getElementById('find-overlay');
+    this._findTargetEl = document.getElementById('find-target');
+    document.getElementById('btn-find-stop')
+      ?.addEventListener('click', () => this._findSession?.cancel());
+
+    // ── Init AudioContext au premier geste utilisateur (iOS Safari) ────────
+    const initAudio = () => {
+      this._beeper.init();
+      document.removeEventListener('pointerdown', initAudio);
+    };
+    document.addEventListener('pointerdown', initAudio, { once: true });
 
     /** Boutons d'action — désactivés pendant tout traitement */
     this._actionBtns = [
@@ -38,6 +55,7 @@ class AEyesApp {
       document.getElementById('btn-text'),
       document.getElementById('btn-details'),
       document.getElementById('btn-ask'),
+      document.getElementById('btn-find'),
     ];
 
     // ── Branchements événements ──────────────────────────────────────────────────────────
@@ -49,6 +67,8 @@ class AEyesApp {
       .addEventListener('click', () => this.onDetails());
     document.getElementById('btn-ask')
       .addEventListener('click', () => this.onAsk());
+    document.getElementById('btn-find')
+      .addEventListener('click', () => this.onFindPrompt());
     document.getElementById('btn-repeat')
       .addEventListener('click', () => this.onRepeat());
 
@@ -268,6 +288,70 @@ class AEyesApp {
       this._tts.speak('Could not get an answer. Please try again.', () => this._setIdle());
     }
   }
+
+  // ── FIND ──────────────────────────────────────────────────────────────────
+
+  /**
+   * Déclenché par le bouton FIND : demande vocalement l'objet à chercher,
+   * puis lance onFind(target). Même mécanique que onAsk().
+   */
+  onFindPrompt() {
+    if (!this._cam.isOpen) {
+      this._tts.speak('Camera not ready.');
+      return;
+    }
+    if (this._findSession) return;
+
+    this._voice.stopListening();
+    this._tts.speak('What are you looking for?', () => {
+      this._voice.startListening();
+      this._voice.captureOnce(target => {
+        this._voice.stopListening();
+        if (!target || !target.trim()) {
+          this._tts.speak('No target heard. Please try again.', () => this._setIdle());
+          return;
+        }
+        this.onFind(target.trim());
+      });
+    });
+  }
+
+  /**
+   * Démarre une session de recherche guidée pour <target>.
+   * Lancée depuis la commande vocale "find <target>" ou depuis onFindPrompt().
+   * @param {string} target
+   */
+  onFind(target) {
+    if (!this._cam.isOpen) {
+      this._tts.speak('Camera not ready.');
+      return;
+    }
+    if (this._findSession) return;
+
+    this._setBusy();
+
+    // Overlay STOP plein écran
+    if (this._findOverlay) {
+      this._findTargetEl.textContent = target;
+      this._findOverlay.hidden = false;
+    }
+
+    this._findSession = new FindSession({
+      cam:    this._cam,
+      tts:    this._tts,
+      beeper: this._beeper,
+      target,
+      onDone: () => {
+        this._findSession = null;
+        if (this._findOverlay) this._findOverlay.hidden = true;
+        this._setIdle();
+      },
+    });
+
+    // Réactive la reconnaissance vocale pour capter "stop" pendant la session.
+    this._voice.startListening();
+  }
+
   // ── TTS ───────────────────────────────────────────────────────────────────
 
   /** Relit le dernier message. Équivalent de MainScreen.on_repeat(). */
@@ -293,6 +377,19 @@ class AEyesApp {
       } else if (question) {
         this._sendQuestion(question);
       }
+      return;
+    }
+
+    // Commande find:<target>
+    if (command.startsWith('find:')) {
+      const target = command.slice(5).trim();
+      if (target) this.onFind(target);
+      return;
+    }
+
+    // Pendant une session FIND, seul "stop" est utile
+    if (this._findSession) {
+      if (command === 'stop') this._findSession.cancel();
       return;
     }
 
