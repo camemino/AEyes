@@ -55,12 +55,14 @@ export class Beeper {
   }
 
   /**
-   * Joue un oscillateur sinus avec rampe linéaire de fréquence + enveloppe.
+   * Joue un oscillateur carré avec enveloppe — onde carrée = harmoniques riches,
+   * bien audible sur les petits haut-parleurs de téléphone.
    * @param {number} freqStart Hz
    * @param {number} freqEnd   Hz
    * @param {number} durationMs
+   * @param {number} [volume=0.25]  Gain de crête (0–1). Onde carrée est naturellement forte.
    */
-  _tone(freqStart, freqEnd, durationMs) {
+  _tone(freqStart, freqEnd, durationMs, volume = 0.25) {
     if (!this._ctx) return;
     const t0 = this._ctx.currentTime;
     const dur = durationMs / 1000;
@@ -68,14 +70,16 @@ export class Beeper {
     const osc  = this._ctx.createOscillator();
     const gain = this._ctx.createGain();
 
-    osc.type = 'sine';
+    osc.type = 'square';
     osc.frequency.setValueAtTime(freqStart, t0);
-    osc.frequency.linearRampToValueAtTime(freqEnd, t0 + dur);
+    if (freqEnd !== freqStart) {
+      osc.frequency.linearRampToValueAtTime(freqEnd, t0 + dur);
+    }
 
-    // Enveloppe : attaque 20 ms, sustain, release 80 ms — évite les clics.
+    // Enveloppe : attaque 15 ms, sustain, release 50 ms.
     gain.gain.setValueAtTime(0, t0);
-    gain.gain.linearRampToValueAtTime(0.4, t0 + 0.02);
-    gain.gain.setValueAtTime(0.4, t0 + Math.max(0.02, dur - 0.08));
+    gain.gain.linearRampToValueAtTime(volume, t0 + 0.015);
+    gain.gain.setValueAtTime(volume, t0 + Math.max(0.015, dur - 0.05));
     gain.gain.linearRampToValueAtTime(0, t0 + dur);
 
     osc.connect(gain).connect(this._ctx.destination);
@@ -83,20 +87,20 @@ export class Beeper {
     osc.stop(t0 + dur + 0.02);
   }
 
-  /** Double chirp ascendant — succès. */
+  /** Double bip ascendant — succès. */
   beepFound() {
-    this._tone(800, 1200, 140);
-    setTimeout(() => this._tone(900, 1400, 160), 150);
+    this._tone(880, 880, 120);
+    setTimeout(() => this._tone(1320, 1320, 180), 130);
   }
 
-  /** Ton grave bref — perdu / hors champ. */
+  /** Bip grave descendant — objet non visible. */
   beepLost() {
-    this._tone(220, 180, 220);
+    this._tone(300, 220, 250);
   }
 
-  /** Bip neutre très court — indique que l'analyse commence ("photo prise"). */
+  /** Bip neutre très court — photo prise, analyse en cours. */
   beepScan() {
-    this._tone(480, 480, 60);
+    this._tone(520, 520, 80, 0.15);
   }
 }
 
