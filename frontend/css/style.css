@@ -69,7 +69,7 @@ html, body {
 .btn {
   display: block;
   width: 100%;
-  flex-shrink: 0;
+  flex: 1;              /* grandit pour remplir l'espace disponible */
   border: none;
   border-radius: 8px;
   font-size: var(--font-l);
@@ -92,7 +92,7 @@ html, body {
 .btn-row {
   display: flex;
   gap: var(--spacing);
-  flex-shrink: 0;
+  flex: 1;              /* même poids que les autres boutons dans le flex column */
 }
 
 .btn-row .btn {
@@ -102,37 +102,31 @@ html, body {
 .btn-describe {
   background: var(--btn-desc);
   color: var(--text-light);
-  height: var(--btn-h-l);
 }
 
 .btn-text {
   background: #FF8C00;
   color: var(--text-light);
-  height: var(--btn-h-m);
 }
 
 .btn-details {
   background: #0a7a3e;
   color: var(--text-light);
-  height: var(--btn-h-m);
 }
 
 .btn-ask {
   background: #7B2FBE;
   color: var(--text-light);
-  height: var(--btn-h-m);
 }
 
 .btn-find {
   background: #00939E;
   color: var(--text-light);
-  height: var(--btn-h-l);
 }
 
 .btn-repeat {
   background: var(--btn-rep);
   color: var(--text-light);
-  height: var(--btn-h-m);
   font-size: var(--font-m);
 }
 
