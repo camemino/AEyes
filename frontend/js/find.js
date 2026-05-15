@@ -196,17 +196,17 @@ export class FindSession {
 
       if (this._cancelled) return;
 
-      const { clock, distance, text } = result;
+      const { direction, distance, text } = result;
 
-      // Succès : bip + TTS "Found" + sortie.
-      if (clock === 'found' && distance !== 'far') {
+      // Succès : bip + TTS "Found it" + sortie.
+      if (direction === 'found' && distance !== 'far') {
         this._beeper.beepFound();
-        this._tts.speak('Found.', () => this._onDone());
+        this._tts.speak('Found it!', () => this._onDone());
         return;
       }
 
-      // Hors champ : bip grave + TTS si phrase nouvelle.
-      if (clock === 'lost') {
+      // Hors champ : bip grave.
+      if (direction === 'not_visible') {
         this._beeper.beepLost();
       }
 

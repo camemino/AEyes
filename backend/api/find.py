@@ -23,34 +23,36 @@ router = APIRouter()
 
 _client = openai.AsyncOpenAI(api_key=OPENAI_API_KEY)
 
-_VALID_CLOCK = {
-    "12", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11",
-    "behind", "found", "lost",
+_VALID_DIRECTION = {
+    "left", "right", "forward", "back", "up", "down", "found", "not_visible",
 }
 _VALID_DISTANCE = {"close", "mid", "far"}
 
 
 def _sanitize(payload: dict) -> dict:
     """Garantit un JSON conforme au schéma attendu par le frontend."""
-    clock = str(payload.get("clock", "lost"))
-    if clock not in _VALID_CLOCK:
-        clock = "lost"
+    direction = str(payload.get("direction", "not_visible"))
+    if direction not in _VALID_DIRECTION:
+        direction = "not_visible"
 
     distance = payload.get("distance")
-    if isinstance(distance, str) and distance in _VALID_DISTANCE:
-        pass
-    else:
+    if not (isinstance(distance, str) and distance in _VALID_DISTANCE):
         distance = None
-    if clock in ("lost", "behind") and distance not in _VALID_DISTANCE:
+    if direction == "not_visible":
         distance = None
 
     text = payload.get("text")
     if not isinstance(text, str) or not text.strip():
         text = {
-            "found": "Found.",
-            "lost": "I don't see it.",
-            "behind": "Behind you.",
-        }.get(clock, f"{clock} o'clock")
+            "found":       "Found it.",
+            "not_visible": "Not visible.",
+            "back":        "Behind you.",
+            "left":        "Turn left.",
+            "right":       "Turn right.",
+            "forward":     "Straight ahead.",
+            "up":          "Look up.",
+            "down":        "Look down.",
+        }.get(direction, "Keep searching.")
     text = text.strip()[:60]
 
     try:
@@ -60,9 +62,9 @@ def _sanitize(payload: dict) -> dict:
     confidence = max(0.0, min(1.0, confidence))
 
     return {
-        "clock": clock,
-        "distance": distance,
-        "text": text,
+        "direction": direction,
+        "distance":  distance,
+        "text":      text,
         "confidence": confidence,
     }
 
