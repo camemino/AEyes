@@ -22,7 +22,7 @@ Toutes les fonctions se pilotent au toucher ou à la voix — l'écran n'a pas b
 1. Ouvrez l'URL de l'application (ex. `https://a-eyes.onrender.com`) ou `http://localhost:8000` en local.
 2. Acceptez les permissions caméra et microphone demandées par le navigateur.
 3. Touchez une fois l'écran — cela active l'audio (obligatoire sur iPhone).
-4. Le flux vidéo s'affiche et l'app annonce vocalement "A-Eyes ready." — elle est prête.
+4. L'app annonce vocalement "A-Eyes ready." — elle est prête.
 
 ---
 
@@ -53,10 +53,10 @@ Toutes les fonctions se pilotent au toucher ou à la voix — l'écran n'a pas b
 ## Disposition des boutons
 
 ```
-[ DESCRIBE               (vert, pleine largeur) ]
-[ TEXT ]  [ DETAILS ]  [ ASK ]    ← même hauteur
-[ FIND                  (teal, pleine largeur) ]
-[ REPEAT                (bleu) ]
+[ DESCRIBE               (vert, pleine largeur)              ]
+[ TEXT  ]  [ DETAILS ]  [ ASK ]    ← même hauteur
+[ FIND                  (teal, pleine largeur)               ]
+[ REPEAT                (bleu, pleine largeur)               ]
 ```
 
 ---
@@ -73,8 +73,10 @@ Le mode FIND analyse le flux caméra en boucle et guide vocalement vers l'objet 
 **Guidage**
 
 L'app indique la direction à suivre : `Turn right`, `Turn left`, `Straight ahead`, `Look up`, `Look down`, `Behind you`.
-Quand l'objet est trouvé : double bip aigu + "Found it!".
-Quand l'objet n'est pas visible : bip grave + "Not visible".
+Trois sons complètent le guidage :
+- Bip court neutre (520 Hz) : photo prise, analyse en cours.
+- Double bip aigu (880 Hz + 1320 Hz) : objet trouvé.
+- Bip grave descendant (300→220 Hz) : objet hors champ.
 
 L'app ne répète un message que si la direction change — silence quand vous êtes sur la bonne trajectoire.
 
@@ -100,7 +102,6 @@ Pour arrêter manuellement : dites `stop` ou tapez le bouton **STOP** rouge qui 
 
 | Symptôme | Solution |
 |----------|----------|
-| La caméra ne s'affiche pas | Vérifiez que la permission caméra est accordée dans les paramètres du navigateur, puis rechargez la page. |
 | Les commandes vocales ne fonctionnent pas | Utilisez Chrome ou Edge ; vérifiez la permission microphone. |
 | L'app ne répond plus aux commandes vocales | Dites `stop` — cela libère l'écoute quelle que soit la situation. |
 | Les bips FIND sont silencieux (iPhone) | Touchez une fois l'écran pour activer l'audio, puis relancez la recherche. |

@@ -21,7 +21,6 @@ class AEyesApp {
     // ── Références DOM ─────────────────────────────────────────────────────
     this._mainScreen  = document.getElementById('main-screen');
     this._videoEl     = document.getElementById('camera-view');
-    this._placeholder = document.getElementById('camera-placeholder');
 
     // ── Modules métier ─────────────────────────────────────────────────────
     this._cam    = new Camera();
@@ -113,10 +112,7 @@ class AEyesApp {
   /** Démarre le flux caméra automatiquement. */
   async _startCamera() {
     const ok = await this._cam.start(this._videoEl);
-    if (ok) {
-      this._videoEl.hidden     = false;
-      this._placeholder.hidden = true;
-    } else {
+    if (!ok) {
       this._tts.speak('Camera unavailable. Please check permissions.');
     }
   }
@@ -130,8 +126,6 @@ class AEyesApp {
   _stopCamera() {
     if (this._cam.isOpen) {
       this._cam.stop();
-      this._videoEl.hidden     = true;
-      this._placeholder.hidden = false;
     }
   }
 

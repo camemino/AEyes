@@ -16,16 +16,13 @@
   ══════════════════════════════════════════════════════════════════════════ -->
   <main id="main-screen" role="main" aria-label="A-Eyes main screen">
 
-    <!-- Zone caméra — affiche le flux vidéo ou un placeholder -->
-    <div id="camera-container" role="img" aria-label="Camera preview area">
-      <p id="camera-placeholder" aria-hidden="true">Camera off</p>
-      <video id="camera-view"
-             hidden
-             autoplay
-             playsinline
-             muted
-             aria-label="Live camera feed"></video>
-    </div>
+    <!-- Vidéo caméra invisible — utilisée uniquement pour la capture de frames -->
+    <video id="camera-view"
+           style="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;"
+           autoplay
+           playsinline
+           muted
+           aria-hidden="true"></video>
 
     <!-- Bouton DESCRIBE — pleine largeur -->
     <button id="btn-describe"

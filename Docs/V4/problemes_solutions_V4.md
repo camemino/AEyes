@@ -12,10 +12,10 @@ L'API Web Audio `StereoPannerNode` fonctionne sur des sorties stéréo. Un haut-
 
 ### Solution
 Suppression du `StereoPannerNode`. Remplacement par 2 sons mono universels :
-- Bip aigu (double chirp 800→1200 Hz) = succès ("found").
-- Bip grave (220→180 Hz) = objet hors champ ("lost").
+- Bip aigu (880 Hz puis 1320 Hz) = succès ("found").
+- Bip grave descendant (300→220 Hz) = objet hors champ ("not_visible").
 
-La position est portée uniquement par la voix (notation horloge). Cette approche fonctionne sur tout haut-parleur, sans matériel additionnel.
+La position est portée uniquement par la voix (instructions directionnelles). Cette approche fonctionne sur tout haut-parleur, sans matériel additionnel.
 
 ---
 
@@ -133,3 +133,62 @@ Le sélecteur `.btn-repeat {` était manquant dans `style.css` : les propriété
 
 ### Solution
 Ajout du sélecteur `.btn-repeat` lors de l'insertion des styles de l'overlay FIND, corrigeant le bug au passage.
+
+---
+
+## P-08 — Notation horloge trop abstraite à la voix
+
+### Symptôme
+La notation "3 o'clock, mid" est immédiatement compréhensible sur une carte ou une image, mais difficile à interpréter en temps réel pour un malvoyant qui marche. "3 o'clock" exige une rotation mentale (quelle est "12" ? où est-ce que je regarde ?) qui ralentit la réaction.
+
+### Cause
+Le design initial cherchait à transmettre la position absolue (angle) de l'objet. En réalité l'utilisateur n'a besoin que d'une instruction motrice simple.
+
+### Solution
+Remplacement de la notation horloge par des instructions directionnelles courtes (max 5 mots) que le modèle formule directement :
+
+| `direction` | TTS prononcé |
+|-------------|-------------|
+| `left` | "Turn left" |
+| `right` | "Turn right" |
+| `forward` + `mid` | "Straight ahead, keep going" |
+| `forward` + `close` | "Straight ahead, almost there" |
+| `back` | "Behind you" |
+| `up` | "Look up" |
+| `down` | "Look down" |
+| `found` | "Found it!" |
+| `not_visible` | "Not visible" |
+
+Le champ `clock` a été renommé `direction` dans le JSON et l'énumération a été redéfinie. `FIND_PROMPT` mis à jour dans `prompts.py`, `_sanitize()` dans `api/find.py`, et `_loop()` dans `find.js`.
+
+---
+
+## P-09 — Bips inaudibles sur le haut-parleur d'un téléphone
+
+### Symptôme
+Les bips produits avec `OscillatorNode` de type `sine` n'étaient pas audibles sur les petits haut-parleurs des téléphones. Le signal sinusoïdal contient très peu d'harmoniques et n'est pas bien reproduit par des haut-parleurs de faible puissance.
+
+### Cause
+Les téléphones portables ont des haut-parleurs mécaniquement limités en basses fréquences et peu efficaces avec des sinusoïdes pures.
+
+### Solution
+Changement de `osc.type = 'sine'` en `osc.type = 'square'`. L'onde carrée contient de riches harmoniques impaires (3e, 5e, 7e…) qui traversent mieux les petits haut-parleurs.
+
+Ajustements associés :
+- Gain réduit à 0.25 (l'onde carrée est intrinsèquement plus forte).
+- `beepFound()` : 2 bips fixes (880 Hz 120 ms puis 1320 Hz 180 ms) au lieu de chirps.
+- `beepLost()` : 300→220 Hz 250 ms.
+- Nouveau `beepScan()` : 520 Hz 80 ms gain 0.15 (bip neutre = photo prise).
+
+---
+
+## P-10 — Affichage caméra inutile pour un malvoyant
+
+### Symptôme
+L'écran affichait le flux vidéo en live dans un bloc `#camera-container` qui occupait environ la moitié de la hauteur écran. Pour un malvoyant, ce retour visuel est inutile et réduit la taille des boutons d'action.
+
+### Cause
+L'interface avait été conçue pour un public mixte. Pour une application dédiée aux malvoyants, l'espace écran doit être entièrement consacré aux boutons.
+
+### Solution
+Suppression du `<div id="camera-container">` et du texte placeholder. La balise `<video>` reste dans le DOM mais invisible (1×1 px, opacité 0, pointer-events none) pour continuer à capturer des frames. Les styles `#camera-container`, `#camera-placeholder` et `#camera-view` ont été supprimés de `style.css`. Les boutons occupent maintenant toute la hauteur écran.
