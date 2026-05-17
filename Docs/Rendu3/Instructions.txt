@@ -1,0 +1,8 @@
+Chaque équipe doit déposer ici un rapport sur la description du prototype et un questionnaire destiné aux futurs utilisateurs avant 17/05. 
+
+ Les consignes sont comme suit : 
+
+Vous devez donner une description détaillée de votre prototype (des fonctionnalités, des scénarios d’utilisation) ;
+Et aussi une description de 1ère expérience d’utilisation (quelles manipulations d’utilisateur donnent quels retours du prototype ?)
+En fonction de cette 1ère expérience, vous devez construire un questionnaire destiné aux futurs utilisateurs pour l’objectif d’améliorer votre produit, en précisant quels bénéfices vous pouvez en tirer question par question.
+Le format du fichier à déposer est PDF.

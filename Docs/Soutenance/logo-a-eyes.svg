@@ -1,0 +1,27 @@
+<svg width="340" height="200" viewBox="62 60 340 200" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="logoTitle logoDesc">
+  <title id="logoTitle">A-Eyes logo</title>
+  <desc id="logoDesc">Stylized eye logo with an A-shaped center and guidance waves for the A-Eyes application.</desc>
+  <defs>
+    <linearGradient id="eyeStroke" x1="52" y1="160" x2="412" y2="160" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#1AB34D"/>
+      <stop offset="0.52" stop-color="#FFCC00"/>
+      <stop offset="1" stop-color="#00939E"/>
+    </linearGradient>
+    <linearGradient id="pupilFill" x1="150" y1="82" x2="314" y2="238" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#00939E"/>
+      <stop offset="1" stop-color="#1AB34D"/>
+    </linearGradient>
+  </defs>
+  <path d="M78 160C120 101.5 181.5 68 232 68C282.5 68 344 101.5 386 160C344 218.5 282.5 252 232 252C181.5 252 120 218.5 78 160Z" stroke="url(#eyeStroke)" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <circle cx="232" cy="160" r="72" fill="url(#pupilFill)"/>
+  <circle cx="232" cy="160" r="34" fill="#050505"/>
+
+  <path d="M232 109L273 209H249L239 183H225L215 209H191L232 109ZM231.5 146L220.5 169H242.5L231.5 146Z" fill="#FFCC00"/>
+
+  <path d="M315 132C333 139 346 154 346 160C346 166 333 181 315 188" stroke="#3399FF" stroke-width="10" stroke-linecap="round"/>
+  <path d="M339 114C365 126 384 145 384 160C384 175 365 194 339 206" stroke="#3399FF" stroke-width="10" stroke-linecap="round" opacity="0.72"/>
+
+  <circle cx="133" cy="160" r="8" fill="#FFCC00"/>
+  <circle cx="353" cy="160" r="8" fill="#1AB34D"/>
+</svg>

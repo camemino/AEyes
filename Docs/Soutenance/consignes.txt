@@ -1,0 +1,25 @@
+Pour rappel, voici les Consignes pour cette réunion : 
+
+
+Comme prévu, cette réunion sera notée. 
+Thème à traiter pour cette réunion : démo et évaluation de 1er prototype.
+Préparer une présentation (12 min) dans laquelle vous devez préciser : 
+Une brève présentation (1 min) afin de rappeler le contexte (problème visé, description de produit attendu en juin).
+La démo de votre 1er prototype (6 min). Préciser les scénarios d’utilisation (quelle demande ? quelle solution ?). Faire des démonstrations sur votre prototype en fonction des scénarios.
+La gestion de projet (3min). Vous expliquez synthétiquement la cohésion de l’équipe, le partage des taches, comment établir le planning et comment le faire évoluer, quelles difficultés sont rencontrées et quelles initiatives sont prises.
+Projection sur les actions à suivre et sur le showroom (2min). Planning d’actions par la suite (avec des jalons détaillés à chaque semaine et analyser des). Expliquer ce que vous comptez à montrer lors du Showroom.
+Tous les membres doivent être présents au rendez-vous. L’absence sera pénalisée. 
+Rappel : il faut rédiger un compte-rendu après chaque réunion (réunions de suivi collectives, ou des réunions de travail dans votre équipe). Tous les comptes-rendus feront une partie annexe de votre rapport final du projet.
+
+ 
+
+Barèmes d’évaluation (indicatifs) :
+
+1pt : des absents pour l’équipe ? 
+2pt : description claire et synthétique du produit et des objectifs à atteindre.
+2pt : clarté de la description des scénarios. 
+3pt : richesse des scénarios proposés (sachant que l’exigence est 7h/élèves/semaine pour P2IP). 
+4pt : qualité de démonstration (par rapport à tous les scénarios proposés). 
+3pt : cohésion de l’équipe, partage des taches.
+3pt : planning (et ses évolutions) détaillé et cohérent.
+2pt : projection sur le showroom convaincante.
