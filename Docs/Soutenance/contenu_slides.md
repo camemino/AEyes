@@ -119,55 +119,49 @@ Situation de la vie courante : demander une information très précise sur ce qu
 
 ## Slide 9 : Gestion de Projet (1 min 30)
 Texte affiché sur la slide :
-* Itérations V1 ➔ V4
-* Organisation par phases :
-  1. Recherche de solutions techniques
-  2. Implémentation
-  3. Scénarios et visuels
-  4. Documents à produire
-* Cohésion : rôles définis (Frontend/UX et Backend/IA)
-* Partage : pair programming et revues croisées
+
+* Difficultés rencontrées :
+  1. Choix techniques
+  2. Choix des fonctionnalités
+  2. Organisationnelle
+
+* Solution :
+  Une gestion de projet par prototypage (4) et une oragnisation agile
 
 Texte / Discours :
-Le projet a été organisé en cycles itératifs, de V1 à V4. Chaque version a suivi le même schéma :
-- Recherche de solutions techniques : exploration des API, choix d'architecture, tests de faisabilité.
-- Implémentation : développement des fonctionnalités, intégration frontend/backend.
-- Scénarios et visuels : définition des cas d'usage, création des maquettes et captures d'écran.
-- Documents à produire : rédaction des rapports de suivi, architecture, problèmes/solutions.
-L'équipe s'est organisée avec des rôles clairs entre frontend, UX et backend IA, en alternant travail individuel ciblé et sessions en binôme.
+Le projet a été organisé en cycles itératifs, de V1 à V4 cela afin d'avoir à tout moment un livrble coéherent. 
+ - Choix de solutions techniques simple. La principale difficulté a été de trouver un socle technqieu qui nous permetterai d'avoir un produit fonctionnel. Pourcela nous sommes resté sur les technoligie de notre premier prototype : python. Juste un découpage en Backend Python / FrontEnd Javascript. Aprés un étude des solution d'hebergement nus sommes parti sur Render qui propose gratuitement un rendu d'un site web directement à partir de notre Github. Et pour l'IA l'utilisation de Chapt GPP mini 4.0 avec une api à moindre coût sur un compte existant.
+- Chaque portotype a été l'objet de l'ajout d'un fonctionnalité nouvelle fonctionnalité et s'assurant quelle fonctionnée aprés un commit sur GithUb, livraison sur Render et test à l'aveugle par une personne de l'équipe n'ayant pas particpé à l'itération afin de receuillir les problémes.
 
-[VISUEL RECOMMANDÉ] : Schéma en 4 colonnes (Recherche ➔ Implémentation ➔ Scénarios/Visuels ➔ Documents) avec la frise V1 ➔ V4 en dessous.
-
----
-
-## Slide 10 : Difficultés et Initiatives (1 min 30)
-Texte affiché sur la slide :
-* Défi 1 : boucle audio (micro / synthèse vocale)
-  * Solution : coupure du micro pendant la restitution
-* Défi 2 : interaction sans regarder l'écran
-  * Solution : bips sonores, retours haptiques, boutons plein écran
-
-Texte / Discours :
-- Difficulté : gérer correctement le micro et la synthèse vocale sans créer de boucle audio.
-- Initiative : nous avons revu la logique de commande vocale pour couper l'écoute pendant la restitution, puis la relancer au bon moment.
-- Difficulté : rendre l'usage réellement pertinent sans regarder l'écran.
-- Initiative : nous avons supprimé le retour vidéo non essentiel et renforcé les retours audio et haptiques pour guider l'utilisateur.
-
-[VISUEL RECOMMANDÉ] : Deux colonnes "Défis" et "Solutions", avec des icônes d'outils et de bugs résolus.
+L'équipe s'est organisée de façon agile en vue de l'ensemble des projets à rendre et de l'implication de chacun dans leurs équipes respectives. On s'est donc adapté avec un rôle tournant de petites équipe focus pendant chaque prototype plutôt qu'une répartition uniforme tout au long du projet.
 
 ---
 
 ## Slide 11 : Actions à suivre (1 min)
 Texte affiché sur la slide :
-* Semaine 1 : stabilisation et optimisation des latences
-* Semaine 2 : tests utilisateurs grandeur nature
-* Semaine 3 : répétitions et préparation du showroom
+
+Depuis la dernière présentation :
+* Semaine 1 : V1 : Herbergement et accessibilité
+* Semaine 2 : V2 : Connexion à un IA
+* Semaine 3 : V3 : Details / Text et ASK
+* Semaine 4 : V4 : Scénario elaboré : Find
+* Semaine 5 : Rendu 3 + Préparation soutenance
+* Semaine 6 : Soutenance + Partielles
+* Semaine 7 : Poster + Etude d'industrialisation + Rapport
+* Semaine 8 : Rapport + Prépartion au show room
+
+Nb :
+Date de la dernière soutenance : 10/04/2026
+Voici les Jalons imposés :
+ * Rendu3 : 17/05/2026
+ * Soutenance : 22/05/2026
+ * Poster : 26/05/2026
+ * Showroom : 04/05/2026
+ * Rapport final : 05/06/2026
 
 Texte / Discours :
-Le planning d'ici le showroom est organisé en trois jalons.
-- S1 : améliorer la réactivité et stabiliser les scénarios de démonstration.
-- S2 : réaliser des tests utilisateurs plus proches des conditions réelles.
-- S3 : finaliser le setup, répartir les rôles à l'oral et répéter la démonstration complète.
+
+Comme expliqué au slide précédent nous avons découpé notre travail par prototypes fiables. Il y en a eut 4 avec pour chacun sa ou ses fonctionnalités décrites dans le slide. Le rythme du travail a aussi été marqué par un ceratin nombre de jalons imposés. Comme déjà présenté au slide précédent l'oganistion a dû être agile fonction des disponibiliét de chacun et de leurs affinités tout en respectant la charge de travail.
 
 [VISUEL RECOMMANDÉ] : Calendrier ou diagramme de Gantt des trois prochaines semaines avec des jalons.
 
